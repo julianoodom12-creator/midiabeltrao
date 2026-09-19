@@ -390,6 +390,7 @@ console.log('[MB] site pronto');
 .dwp-slider-row{display:flex;align-items:center;gap:9px;margin-bottom:9px}
 .dwp-slider-row input[type=range]{flex:1;accent-color:#6B4CFF}
 .dwp-slider-row .dwp-val{font-size:12px;font-weight:800;color:#6B4CFF;min-width:44px;text-align:right;font-family:ui-monospace,monospace}
+#dwp-json-out{width:100%;min-height:140px;padding:10px;background:rgba(0,0,0,.4);border:1px solid rgba(107,76,255,.3);border-radius:8px;color:#0f0;font-family:ui-monospace,monospace;font-size:11px;outline:none}
 </style>
 
 <div id="dwp-login">
@@ -559,29 +560,34 @@ console.log('[MB] site pronto');
     </div>
 
     <div class="dwp-view" id="dwp-view-publicar">
-      <div class="dwp-info"><b>Baixa dados.json e sobe na raiz do repo.</b></div>
-      <h3 class="dwp-cat">💾 Baixar dados.json</h3>
-      <button class="dwp-btn success wide" id="dwp-export" type="button">📥 Baixar dados.json</button>
+      <div class="dwp-info"><b>Publicar.</b> Gera o dados.json pra você subir manualmente ou empurra direto via GitHub.</div>
 
-      <h3 class="dwp-cat">⚡ Publicar no GitHub</h3>
+      <h3 class="dwp-cat">💾 1. Gerar / baixar dados.json</h3>
+      <button class="dwp-btn success wide" id="dwp-export" type="button">📥 Baixar dados.json</button>
+      <button class="dwp-btn ghost wide" id="dwp-copy-json" type="button">📋 Copiar JSON</button>
+      <button class="dwp-btn ghost wide" id="dwp-show-json" type="button">👁️ Mostrar JSON aqui</button>
+      <textarea id="dwp-json-out" placeholder="Clique em 'Mostrar JSON aqui' pra ver o conteúdo"></textarea>
+
+      <h3 class="dwp-cat" style="margin-top:18px;">⚡ 2. Publicar direto no GitHub</h3>
       <div class="dwp-datacard">
-        <div class="dwp-dc-label">🔑 Token</div>
+        <div class="dwp-dc-label">🔑 Token (deve ter permissão Contents: Read and write)</div>
         <input type="password" id="dwp-gh-token" placeholder="github_pat_...">
         <div class="dwp-dc-row">
-          <input type="text" id="dwp-gh-user" placeholder="usuário" style="flex:1">
+          <input type="text" id="dwp-gh-user" placeholder="usuario (sem .git)" style="flex:1">
           <input type="text" id="dwp-gh-repo" placeholder="repo" style="flex:1">
         </div>
         <div class="dwp-dc-row">
           <input type="text" id="dwp-gh-path" placeholder="caminho" value="dados.json" style="flex:1">
           <input type="text" id="dwp-gh-branch" placeholder="branch" value="main" style="flex:1">
         </div>
+        <div style="font-size:11px;color:#a89ec4;line-height:1.5">⚠️ Use só o <b>nome do usuário</b>, sem <code>.git</code> no final. Ex: <code>ulianoodom12-creator</code></div>
         <div class="dwp-dc-row">
           <button class="dwp-btn" id="dwp-gh-save" type="button">💾 Salvar</button>
           <button class="dwp-btn ghost" id="dwp-gh-test" type="button">🔍 Testar</button>
         </div>
-        <div class="dwp-gh-status" id="dwp-gh-status">Configure e teste.</div>
+        <div class="dwp-gh-status" id="dwp-gh-status">Preencha os campos e clique em Testar.</div>
       </div>
-      <button class="dwp-btn github wide" id="dwp-gh-publish" type="button">🚀 Publicar AGORA</button>
+      <button class="dwp-btn github wide" id="dwp-gh-publish" type="button">🚀 Publicar AGORA no GitHub</button>
 
       <h3 class="dwp-cat">🔒 Segurança</h3>
       <button class="dwp-btn ghost wide" id="dwp-lock-now" type="button">Bloquear painel</button>
@@ -614,7 +620,7 @@ var LS_SESS = 'mb_sess_v13';
 var panelOpen = false, editMode = false, unlocked = false;
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function toast(m){ var t=$('dwp-toast'); if(!t) return; t.textContent=m; t.classList.add('on'); clearTimeout(t._tm); t._tm=setTimeout(function(){ t.classList.remove('on'); }, 2200); }
+function toast(m){ var t=$('dwp-toast'); if(!t) return; t.textContent=m; t.classList.add('on'); clearTimeout(t._tm); t._tm=setTimeout(function(){ t.classList.remove('on'); }, 2500); }
 function getMB(){
   if(window.MB_DATA && Array.isArray(window.MB_DATA.videos) && Array.isArray(window.MB_DATA.noticias)) return window.MB_DATA;
   if(window.MB && window.MB.data) return window.MB.data;
@@ -949,7 +955,6 @@ function addNoticia(){
   updateStats();
   toast('✓ Notícia adicionada');
 }
-/* RGB painel */
 function renderRgbPreview(){
   var p=$('dwp-rgb-preview'); if(!p) return;
   var s=getStyle();
@@ -965,7 +970,6 @@ function renderTextRgbPreview(){
   sp.style.cssText='font-size:22px;font-weight:900;letter-spacing:2px;';
   if(!s.rgbText.on){ sp.style.color='#fff'; return; }
   var speed=s.rgbText.speed, mode=s.rgbText.mode;
-  var st=document.createElement('style'); st.id='dwp-txtrgb-preview-style';
   if(mode==='gradient' || mode==='rainbow'){
     var colors=mode==='rainbow'?'#ff0080,#ff8c00,#ffcc00,#00ff88,#00d4ff,#7928ca,#ff0080':'#ff0080,#7928ca,#00d4ff,#00ff88,#ffcc00,#ff0080';
     sp.style.background='linear-gradient(90deg,'+colors+')';
@@ -992,7 +996,6 @@ function syncRgbInputs(){
   if($('dwp-txtrgb-scope')) $('dwp-txtrgb-scope').value=s.rgbText.scope;
   if($('dwp-txtrgb-speed')){ $('dwp-txtrgb-speed').value=s.rgbText.speed; $('dwp-txtrgb-speed-val').textContent=s.rgbText.speed+'s'; }
 }
-/* AUTH */
 function isLocked(){ try{ var u=parseInt(localStorage.getItem(LS_LOCK)||'0',10); if(u>Date.now()) return true; if(u>0) localStorage.removeItem(LS_LOCK); return false; }catch(e){ return false; } }
 function setLock(){ try{ localStorage.setItem(LS_LOCK, String(Date.now()+600000)); }catch(e){} }
 function getAtt(){ try{ return parseInt(localStorage.getItem(LS_ATT)||'0',10); }catch(e){ return 0; } }
@@ -1044,6 +1047,9 @@ function updateStats(){
   if($('st-imgs')) $('st-imgs').textContent = Object.keys(lerImgs()).length;
 }
 /* GITHUB */
+function sanitizeUser(u){
+  return String(u||'').trim().replace(/\.git$/i,'').replace(/\/+$/,'');
+}
 function ghLoad(){ try{ var r=localStorage.getItem(LS_GH); if(!r) return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; return JSON.parse(r); }catch(e){ return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; } }
 function ghSave(c){ try{ localStorage.setItem(LS_GH, JSON.stringify(c)); }catch(e){} }
 function ghSyncInputs(){
@@ -1057,8 +1063,8 @@ function ghSyncInputs(){
 function ghSaveFromInputs(){
   var c={
     token:($('dwp-gh-token') ? $('dwp-gh-token').value.trim() : ''),
-    user:($('dwp-gh-user') ? $('dwp-gh-user').value.trim() : ''),
-    repo:($('dwp-gh-repo') ? $('dwp-gh-repo').value.trim() : ''),
+    user:sanitizeUser($('dwp-gh-user') ? $('dwp-gh-user').value : ''),
+    repo:($('dwp-gh-repo') ? $('dwp-gh-repo').value.trim() : '').replace(/\.git$/i,''),
     path:($('dwp-gh-path') ? $('dwp-gh-path').value.trim() : '') || 'dados.json',
     branch:($('dwp-gh-branch') ? $('dwp-gh-branch').value.trim() : '') || 'main'
   };
@@ -1080,21 +1086,22 @@ function ghApi(c){ return 'https://api.github.com/repos/'+encodeURIComponent(c.u
 function ghStatus(m, t){ var el=$('dwp-gh-status'); if(!el) return; el.innerHTML=m; el.style.color = t==='ok' ? '#25d366' : t==='err' ? '#f87171' : '#a89ec4'; }
 async function ghTest(){
   var c=ghSaveFromInputs();
-  if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche tudo.', 'err'); return; }
-  ghStatus('🔍 Testando...');
+  if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche token, usuário e repo.', 'err'); return; }
+  ghStatus('🔍 Testando conexão com <b>'+esc(c.user)+'/'+esc(c.repo)+'</b>...');
   try{
     var r=await fetch(ghApi(c)+'?ref='+encodeURIComponent(c.branch), {headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'}});
-    if(r.status===404){ ghStatus('✓ Ok. '+c.path+' será criado.', 'ok'); return; }
-    if(r.status===401){ ghStatus('❌ Token inválido.', 'err'); return; }
-    if(r.status===403){ ghStatus('❌ Sem permissão.', 'err'); return; }
+    if(r.status===404){ ghStatus('✓ Conexão ok com o repo <b>'+esc(c.user)+'/'+esc(c.repo)+'</b>. O arquivo <b>'+esc(c.path)+'</b> ainda não existe — será criado no Publish.', 'ok'); return; }
+    if(r.status===401){ ghStatus('❌ Token inválido ou expirado. Gere um novo em github.com/settings/tokens', 'err'); return; }
+    if(r.status===403){ ghStatus('❌ Sem permissão. O token precisa ter <b>Contents: Read and write</b> neste repo.', 'err'); return; }
+    if(r.status===404){ ghStatus('❌ Repositório não encontrado. Confere se <b>'+esc(c.user)+'/'+esc(c.repo)+'</b> existe no GitHub.', 'err'); return; }
     if(!r.ok) throw new Error('HTTP '+r.status);
-    ghStatus('✓ Ok. '+c.path+' existe.', 'ok');
+    ghStatus('✓ Tudo certo. Repo e arquivo existem. Pode publicar.', 'ok');
   }catch(e){ ghStatus('❌ '+e.message, 'err'); }
 }
 async function ghPublish(){
   var c=ghSaveFromInputs();
   if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche tudo.', 'err'); return; }
-  ghStatus('🚀 Publicando...');
+  ghStatus('🚀 Publicando em <b>'+esc(c.user)+'/'+esc(c.repo)+'/'+esc(c.path)+'</b>...');
   var b64=utf8B64(JSON.stringify(buildPayload(), null, 2));
   var sha=null;
   try{
@@ -1105,18 +1112,80 @@ async function ghPublish(){
   if(sha) body.sha=sha;
   try{
     var r=await fetch(ghApi(c), {method:'PUT', headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json', 'X-GitHub-Api-Version':'2022-11-28'}, body:JSON.stringify(body)});
-    if(!r.ok){ var t=await r.text(); ghStatus('❌ HTTP '+r.status+': '+t.slice(0,150), 'err'); return; }
+    if(!r.ok){
+      var errTxt = await r.text();
+      var msg = 'HTTP '+r.status;
+      if(r.status===404) msg = 'Repositório não encontrado. Confere se <b>'+esc(c.user)+'/'+esc(c.repo)+'</b> existe (sem .git no final).';
+      else if(r.status===401) msg = 'Token inválido ou expirado.';
+      else if(r.status===403) msg = 'Sem permissão. O token precisa de <b>Contents: Read and write</b>.';
+      else if(r.status===409) msg = 'Conflito de SHA. Recarrega a página e tenta de novo.';
+      else if(r.status===422) msg = 'Dados rejeitados pelo GitHub. Confere se o branch <b>'+esc(c.branch)+'</b> existe.';
+      ghStatus('❌ '+msg, 'err');
+      console.warn('[DWP] GitHub response:', errTxt);
+      return;
+    }
     var res=await r.json();
     var url=res.commit&&res.commit.html_url ? res.commit.html_url : '';
-    ghStatus('✓ Publicado!'+(url?' <a href="'+url+'" target="_blank" style="color:#22d3ee">ver</a>':''), 'ok');
-    toast('✓ Publicado');
+    ghStatus('✓ Publicado! GitHub Pages rebuilda em ~1min.'+(url?' <a href="'+url+'" target="_blank" style="color:#22d3ee">ver commit</a>':''), 'ok');
+    toast('✓ Publicado no GitHub');
   }catch(e){ ghStatus('❌ '+e.message, 'err'); }
 }
+/* EXPORT */
 function exportJson(){
-  var blob=new Blob([JSON.stringify(buildPayload(), null, 2)], {type:'application/json'});
-  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dados.json';
-  document.body.appendChild(a); a.click(); a.remove();
-  toast('✓ dados.json gerado');
+  var payload = buildPayload();
+  var jsonStr = JSON.stringify(payload, null, 2);
+  var filename = 'dados.json';
+  /* Tentativa 1: Blob + link com click programático e sem revogar logo em seguida */
+  try{
+    var blob = new Blob([jsonStr], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    /* Não revoga imediatamente — espera 10s */
+    setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(e){} }, 10000);
+    toast('✓ Download iniciado');
+    /* Também preenche o textarea de fallback */
+    if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
+    return;
+  }catch(e){}
+  /* Fallback: data URI */
+  try{
+    var a2 = document.createElement('a');
+    a2.href = 'data:application/json;charset=utf-8,'+encodeURIComponent(jsonStr);
+    a2.download = filename;
+    a2.style.display='none';
+    document.body.appendChild(a2);
+    a2.click();
+    setTimeout(function(){ try{ document.body.removeChild(a2); }catch(e){} }, 5000);
+    toast('✓ Download iniciado (fallback)');
+  }catch(e){ toast('⚠️ Download falhou. Use "Mostrar JSON aqui" e copie'); }
+}
+function copyJson(){
+  var jsonStr = JSON.stringify(buildPayload(), null, 2);
+  if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
+  var ok=false;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(jsonStr).then(function(){ toast('✓ JSON copiado'); });
+      ok=true;
+    }
+  }catch(e){}
+  if(!ok){
+    try{
+      var ta=$('dwp-json-out');
+      if(ta){ ta.select(); ta.setSelectionRange(0, 999999); document.execCommand('copy'); toast('✓ JSON copiado (manual)'); }
+      else toast('⚠️ Copia do textarea');
+    }catch(e){ toast('⚠️ Copia manual do textarea'); }
+  }
+}
+function showJson(){
+  var jsonStr = JSON.stringify(buildPayload(), null, 2);
+  if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
+  toast('✓ JSON mostrado abaixo');
 }
 function clearLocal(){
   if(!confirm('Apagar dados locais?')) return;
@@ -1151,6 +1220,8 @@ function bindDelegated(){
     if(t.closest('#dwp-v-add')){ e.preventDefault(); e.stopPropagation(); addVideo(); return; }
     if(t.closest('#dwp-n-add')){ e.preventDefault(); e.stopPropagation(); addNoticia(); return; }
     if(t.closest('#dwp-export')){ e.preventDefault(); exportJson(); return; }
+    if(t.closest('#dwp-copy-json')){ e.preventDefault(); copyJson(); return; }
+    if(t.closest('#dwp-show-json')){ e.preventDefault(); showJson(); return; }
     if(t.closest('#dwp-gh-save')){ e.preventDefault(); ghSaveFromInputs(); toast('✓ Salvo'); ghStatus('✓ Config salva.', 'ok'); return; }
     if(t.closest('#dwp-gh-test')){ e.preventDefault(); ghTest(); return; }
     if(t.closest('#dwp-gh-publish')){ e.preventDefault(); ghPublish(); return; }
@@ -1176,13 +1247,16 @@ function bindDelegated(){
     }
   });
   document.addEventListener('input', function(e){
-    if(e.target && e.target.id==='dwp-filter') refreshElementList();
-    if(e.target && e.target.id==='dwp-img-filter') refreshImageList();
+    var t = e.target; if(!t) return;
+    if(t.id==='dwp-filter'){ refreshElementList(); return; }
+    if(t.id==='dwp-img-filter'){ refreshImageList(); return; }
+    var s = getStyle();
+    if(t.id==='dwp-rgb-speed'){ s.rgbBg.speed=parseInt(t.value,10)||14; $('dwp-rgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-rgb-opacity'){ s.rgbBg.opacity=parseInt(t.value,10)||0; $('dwp-rgb-opacity-val').textContent=t.value+'%'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-txtrgb-speed'){ s.rgbText.speed=parseInt(t.value,10)||4; $('dwp-txtrgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderTextRgbPreview(); return; }
   });
-  /* RGB bindings */
   document.addEventListener('change', function(e){
-    var t = e.target;
-    if(!t) return;
+    var t = e.target; if(!t) return;
     var s = getStyle();
     if(t.id==='dwp-rgb-on'){ s.rgbBg.on=t.checked; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
     if(t.id==='dwp-rgb-dir'){ s.rgbBg.dir=t.value; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
@@ -1195,14 +1269,6 @@ function bindDelegated(){
       if(idx>=0){ s.rgbBg.colors[idx]=t.value; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); }
       return;
     }
-  });
-  document.addEventListener('input', function(e){
-    var t = e.target;
-    if(!t) return;
-    var s = getStyle();
-    if(t.id==='dwp-rgb-speed'){ s.rgbBg.speed=parseInt(t.value,10)||14; $('dwp-rgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
-    if(t.id==='dwp-rgb-opacity'){ s.rgbBg.opacity=parseInt(t.value,10)||0; $('dwp-rgb-opacity-val').textContent=t.value+'%'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
-    if(t.id==='dwp-txtrgb-speed'){ s.rgbText.speed=parseInt(t.value,10)||4; $('dwp-txtrgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderTextRgbPreview(); return; }
   });
 }
 window.dwpRequestOpen = requestOpen;
