@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "gerado_em": "2026-09-19T04:00:14.604Z",
+    "versao": 13
+  },
+  "config": {
+    "auto60": false
+  },
+  "videos": [
+    {
+      "tipo": "youtube",
+      "id": "ZirsPqIx1Nc",
+      "linkOriginal": "https://youtu.be/ZirsPqIx1Nc?is=rQkcBrUvsPyA6Mlg",
+      "titulo": "Teste",
+      "desc": "Mídia Beltrão - @midiabeltrao",
+      "data": 1789789190929
+    },
+    {
+      "tipo": "youtube",
+      "id": "jNQXAC9IVRw",
+      "linkOriginal": "",
+      "titulo": "Beltrão Hoje - Mídia Beltrão @midiabeltrao",
+      "desc": "Troque no ADMIN",
+      "data": 1789789130090
+    }
+  ],
+  "noticias": [
+    {
+      "titulo": "Francisco Beltrão ganha novo portal Mídia Beltrão @midiabeltrao",
+      "cat": "DESTAQUE",
+      "img": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300",
+      "texto": "Portal com vídeos em alta"
+    }
+  ],
+  "style": {
+    "rgbBg": {
+      "on": false,
+      "colors": [
+        "#ff0080",
+        "#7928ca",
+        "#00d4ff",
+        "#00ff88",
+        "#ffcc00"
+      ],
+      "speed": 14,
+      "opacity": 55,
+      "dir": "120deg",
+      "blend": "normal"
+    },
+    "rgbText": {
+      "on": false,
+      "mode": "rainbow",
+      "scope": "headings-buttons",
+      "speed": 4
+    }
+  },
+  "edits": {
+    "texts": {},
+    "images": {}
+  }
+}
