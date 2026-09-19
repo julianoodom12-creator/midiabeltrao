@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Mídia Beltrão - Portal de Notícias de Francisco Beltrão PR | @midiabeltrao</title>
+<link rel="icon" type="image/png" href="logo.png">
+<meta name="description" content="Mídia Beltrão - Portal de notícias de Francisco Beltrão PR. Siga @midiabeltrao">
+<meta property="og:image" content="logo.png">
+<style>
+:root{--roxo:#6B4CFF;--black:#080808}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+html,body{overflow-x:hidden;width:100%;max-width:100vw}
+body{background:#ffffff;color:#111111}
+#topUol{background:var(--black);border-bottom:3px solid var(--roxo);padding:10px 3% 14px;display:flex;flex-direction:column;align-items:center;position:sticky;top:0;z-index:100;width:100%;overflow:hidden}
+.topRow{width:100%;display:flex;justify-content:space-between;align-items:center}
+.logoImg{height:72px;width:340px;object-fit:contain;background:#000;border-radius:10px;padding:6px 10px;flex-shrink:0;display:block}
+.slogan{color:#fff;font-style:italic;font-weight:800;font-size:20px;margin-top:10px;letter-spacing:.2px;text-align:center;width:100%}
+#menuBtn{width:42px;height:42px;background:#1a1a1a;border:1px solid #333;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;flex-shrink:0}
+#menuBtn span{width:20px;height:2.5px;background:var(--roxo);display:block;border-radius:2px}
+#menuUol{background:#111;border-bottom:3px solid var(--roxo);padding:0 4%;display:none;flex-direction:column;position:sticky;top:115px;z-index:90;width:100%}
+#menuUol.ativo{display:flex}
+#menuUol p{padding:16px 0;font-size:12px;font-weight:800;cursor:pointer;border-bottom:1px solid #222;color:#aaa}
+#menuUol p.ativo{color:var(--roxo)}
+#painelUol{display:none;background:#111;border-bottom:3px solid var(--roxo);padding:18px 4%;width:100%}
+#painelUol.ativo{display:block}
+.wrap{max-width:1300px;margin:0 auto;padding:20px 4%;display:grid;grid-template-columns:1fr 340px;gap:18px;width:100%;box-sizing:border-box;background:#ffffff}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:14px 3%}.logoImg{height:56px!important;width:250px!important}.slogan{font-size:16px!important;margin-top:6px!important}#menuUol{top:98px}}
+.card{background:#ffffff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;width:100%;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.cardHead{padding:14px 16px;border-left:4px solid var(--roxo);font-weight:800;font-size:13px;background:#f9f9f9;color:#111;display:flex;justify-content:space-between}
+.videoBox{position:relative;padding-top:56.25%;background:#000;width:100%}
+.videoBox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.noticia{padding:14px;border-bottom:1px solid #eee;display:flex;gap:12px}
+.noticia img{width:100px;height:70px;object-fit:cover;border-radius:6px;background:#eee;flex-shrink:0}
+#instaFloat{position:fixed;bottom:20px;right:20px;width:62px;height:62px;background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);border-radius:50%;display:grid;place-items:center;text-decoration:none;z-index:200;box-shadow:0 8px 20px rgba(0,0,0,.25);border:2px solid #fff}
+#instaFloat svg{width:32px;height:32px;fill:#fff}
+.videoItem{border:1px solid #eee;padding:10px;border-radius:8px;margin-top:8px;display:flex;gap:10px;background:#ffffff}
+.seoFooter{background:#000;color:#777;padding:40px 4%;margin-top:20px;border-top:3px solid var(--roxo);width:100%;box-sizing:border-box}
+.seoFooter a{color:var(--roxo);font-weight:800;text-decoration:none}
+.tagCloud{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tagCloud span{background:#f2f2f2;border:1px solid #e5e5e5;padding:5px 10px;border-radius:20px;font-size:10px;color:#111}
+#dwp-rgb-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;background-size:400% 400%;animation:dwpRgbShift 14s ease infinite;display:none}
+#dwp-rgb-bg.on{display:block}
+@keyframes dwpRgbShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes dwpTextGradient{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+@keyframes dwpTextFlash{0%{color:#ff0080}16%{color:#ffcc00}33%{color:#00ff88}50%{color:#00d4ff}66%{color:#7928ca}83%{color:#ec4899}100%{color:#ff0080}}
+@keyframes dwpTextPulse{0%,100%{opacity:1;text-shadow:0 0 8px currentColor}50%{opacity:.55;text-shadow:0 0 20px currentColor,0 0 30px currentColor}}
+@keyframes dwpTextNeon{0%,100%{text-shadow:0 0 5px currentColor}50%{text-shadow:0 0 20px currentColor,0 0 30px currentColor,0 0 40px currentColor}}
+@keyframes dwpTextShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-1px)}75%{transform:translateX(1px)}}
+</style>
+</head>
+<body>
+<div id="dwp-rgb-bg"></div>
+
+<div id="topUol">
+<div class="topRow">
+<div style="display:flex;align-items:center;"><div id="menuBtn"><span></span><span></span><span></span><span></span></div></div>
+<div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+<img src="logo.png" class="logoImg" alt="Mídia Beltrão">
+</div>
+</div>
+<div class="slogan">Informação que conecta!</div>
+</div>
+<div id="menuUol">
+<p class="ativo" data-aba="destaque">☰ NOTÍCIAS EM DESTAQUE</p>
+<p data-aba="cultura">☰ CULTURA</p>
+<p data-aba="lazer">☰ LAZER</p>
+<p data-aba="esporte">☰ ESPORTE</p>
+<p data-aba="economia">☰ ECONOMIA</p>
+<p data-aba="parceiros">☰ PARCEIROS</p>
+</div>
+<div id="painelUol"></div>
+<div class="wrap">
+<div>
+<div class="card"><div class="cardHead"><span>📺 VÍDEO DO DIA - ALTA RESOLUÇÃO</span><small id="qtdVideos" style="opacity:.5"></small></div><div class="videoBox" id="videoBox"><iframe id="videoDia" src="" allowfullscreen></iframe></div><div style="padding:14px"><h2 id="tituloVideo" style="font-size:26px;font-weight:900;letter-spacing:-0.5px"></h2><p id="descVideo" style="font-size:12px;opacity:.7;margin-top:8px;color:#555"></p></div></div>
+<div class="card" style="margin-top:14px"><div class="cardHead">📚 TODOS OS VÍDEOS - HISTÓRICO</div><div id="historicoVideos" style="padding:8px"></div></div>
+<div class="card" style="margin-top:14px"><div class="cardHead">Últimas notícias</div><div id="listaNoticias"></div></div>
+</div>
+<div>
+<div class="card"><div class="cardHead">🗂️ CONTEÚDO DA ABA</div>
+<div id="aba-destaque" class="abaContent" style="display:block;padding:14px"><b>Notícias em Destaque</b><p style="font-size:11px;margin-top:8px">Notícias quentes de Beltrão 24h.</p></div>
+<div id="aba-cultura" class="abaContent" style="display:none;padding:14px"><b>Cultura</b><p style="font-size:11px">Agenda cultural Beltrão.</p></div>
+<div id="aba-lazer" class="abaContent" style="display:none;padding:14px"><b>Lazer</b><p style="font-size:11px">Onde ir hoje.</p></div>
+<div id="aba-esporte" class="abaContent" style="display:none;padding:14px"><b>Esporte</b><p style="font-size:11px">Esporte local.</p></div>
+<div id="aba-economia" class="abaContent" style="display:none;padding:14px"><b>Economia</b><p style="font-size:11px">Comércio e vagas.</p></div>
+<div id="aba-parceiros" class="abaContent" style="display:none;padding:14px"><b>Parceiros</b><div style="font-size:11px;margin-top:8px">Anuncie R$97/mês<br><br><a href="https://wa.me/5546991219785" style="background:var(--roxo);color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none">ANUNCIAR</a><br><br>Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr">@midiabeltrao</a></div></div>
+</div>
+<div class="card" style="margin-top:14px;padding:16px;text-align:center"><b style="font-size:11px;color:var(--roxo)">PUBLICIDADE R$97/mês</b><div style="margin-top:10px;background:#fafafa;height:220px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;border:1px dashed #ddd;color:#999">Seu anúncio 300x250</div></div>
+</div>
+</div>
+
+<a id="instaFloat" href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" target="_blank" aria-label="Instagram @midiabeltrao">
+<svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
+</a>
+
+<div class="seoFooter">
+<h3 style="color:#fff">MÍDIA BELTRÃO - PORTAL DE NOTÍCIAS FRANCISCO BELTRÃO PR - @midiabeltrao</h3>
+<p style="margin-top:10px;font-size:11px;line-height:1.9;color:#aaa">Portal <b style="color:#fff">Mídia Beltrão</b>. Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" target="_blank">@midiabeltrao</a></p>
+<div class="tagCloud"><span>notícias Francisco Beltrão</span><span>Mídia Beltrão</span><span>@midiabeltrao</span></div>
+<p style="margin-top:20px;font-size:9px;opacity:.3">© 2026 MÍDIA BELTRÃO</p>
+</div>
+
+<script>
+(function(){
+'use strict';
+window.MB_DATA = { videos: [], noticias: [], config:{auto60:false} };
+window.MB_STYLE = {
+  rgbBg:{on:false, colors:['#ff0080','#7928ca','#00d4ff','#00ff88','#ffcc00'], speed:14, opacity:55, dir:'120deg', blend:'normal'},
+  rgbText:{on:false, mode:'gradient', scope:'headings', speed:4}
+};
+function salvarLocal(){
+  try{
+    localStorage.setItem('mb_data_local', JSON.stringify(window.MB_DATA));
+    localStorage.setItem('mb_style_local', JSON.stringify(window.MB_STYLE));
+  }catch(e){}
+}
+function carregarLocal(){
+  try{
+    var r=localStorage.getItem('mb_data_local');
+    if(r){
+      var o=JSON.parse(r);
+      if(Array.isArray(o.videos) && o.videos.length) window.MB_DATA.videos=o.videos;
+      if(Array.isArray(o.noticias) && o.noticias.length) window.MB_DATA.noticias=o.noticias;
+      if(o.config) window.MB_DATA.config=o.config;
+    }
+    var s=localStorage.getItem('mb_style_local');
+    if(s){
+      var st=JSON.parse(s);
+      if(st.rgbBg) window.MB_STYLE.rgbBg=Object.assign(window.MB_STYLE.rgbBg, st.rgbBg);
+      if(st.rgbText) window.MB_STYLE.rgbText=Object.assign(window.MB_STYLE.rgbText, st.rgbText);
+    }
+  }catch(e){}
+}
+window.extrairID = function(url){
+  url=String(url||'').trim();
+  if(url.indexOf('instagram.com')>=0){
+    var id='';
+    if(url.indexOf('/p/')>=0) id=url.split('/p/')[1].split('/')[0].split('?')[0];
+    else if(url.indexOf('/reel/')>=0) id=url.split('/reel/')[1].split('/')[0].split('?')[0];
+    else if(url.indexOf('/tv/')>=0) id=url.split('/tv/')[1].split('/')[0].split('?')[0];
+    return {tipo:'insta', id:id, original:url.split('?')[0]};
+  }
+  var yt='';
+  if(url.indexOf('youtu.be/')>=0) yt=url.split('youtu.be/')[1].split('?')[0];
+  else if(url.indexOf('v=')>=0) yt=url.split('v=')[1].split('&')[0];
+  else yt=url;
+  return {tipo:'youtube', id:yt, original:url};
+};
+window.aplicarRgbFundo = function(){
+  var cfg = window.MB_STYLE.rgbBg;
+  var el = document.getElementById('dwp-rgb-bg');
+  if(!el) return;
+  if(!cfg.on){ el.classList.remove('on'); el.style.background=''; return; }
+  el.classList.add('on');
+  el.style.background = 'linear-gradient('+cfg.dir+','+cfg.colors.join(',')+')';
+  el.style.backgroundSize = '400% 400%';
+  el.style.animation = 'dwpRgbShift '+cfg.speed+'s ease infinite';
+  el.style.opacity = (cfg.opacity/100);
+  el.style.mixBlendMode = cfg.blend || 'normal';
+};
+window.aplicarRgbTexto = function(){
+  var old = document.getElementById('dwp-rgb-text-style');
+  if(old) old.remove();
+  document.querySelectorAll('.dwp-rgb-target').forEach(function(el){ el.classList.remove('dwp-rgb-target'); });
+  var cfg = window.MB_STYLE.rgbText;
+  if(!cfg.on) return;
+  var scope = cfg.scope || 'headings';
+  var sels = [];
+  if(scope==='headings') sels = ['h1','h2','h3','h4','h5','h6'];
+  else if(scope==='buttons') sels = ['button','a','.btn'];
+  else if(scope==='headings-buttons') sels = ['h1','h2','h3','h4','h5','h6','button','a','.btn'];
+  else sels = ['h1','h2','h3','h4','h5','h6','button','a','p','span','li','.btn'];
+  sels.forEach(function(sel){
+    try{
+      document.querySelectorAll(sel).forEach(function(el){
+        if(el.closest('#dwp-panel') || el.closest('#dwp-login') || el.closest('#dwp-inline-editor')) return;
+        el.classList.add('dwp-rgb-target');
+      });
+    }catch(e){}
+  });
+  var st = document.createElement('style');
+  st.id = 'dwp-rgb-text-style';
+  var speed = cfg.speed || 4;
+  var mode = cfg.mode || 'gradient';
+  if(mode==='gradient' || mode==='rainbow'){
+    var colors = mode==='rainbow' ? '#ff0080,#ff8c00,#ffcc00,#00ff88,#00d4ff,#7928ca,#ff0080' : '#ff0080,#7928ca,#00d4ff,#00ff88,#ffcc00,#ff0080';
+    st.textContent = '.dwp-rgb-target{background:linear-gradient(90deg,'+colors+') !important;background-size:400% 400% !important;-webkit-background-clip:text !important;background-clip:text !important;-webkit-text-fill-color:transparent !important;color:transparent !important;animation:dwpTextGradient '+speed+'s linear infinite !important;}';
+  } else if(mode==='flash'){
+    st.textContent = '.dwp-rgb-target{animation:dwpTextFlash '+speed+'s linear infinite !important;}';
+  } else if(mode==='pulse'){
+    st.textContent = '.dwp-rgb-target{animation:dwpTextPulse '+speed+'s ease-in-out infinite !important;}';
+  } else if(mode==='neon'){
+    st.textContent = '.dwp-rgb-target{animation:dwpTextNeon '+speed+'s ease-in-out infinite !important;}';
+  } else if(mode==='shake'){
+    st.textContent = '.dwp-rgb-target{animation:dwpTextShake '+speed+'s linear infinite !important;}';
+  }
+  document.head.appendChild(st);
+};
+window.aplicarEstilos = function(){ window.aplicarRgbFundo(); window.aplicarRgbTexto(); };
+window.carregarSite = function(){
+  try{
+    if(window.MB_DATA.videos.length===0){
+      window.MB_DATA.videos=[{tipo:'youtube', id:'jNQXAC9IVRw', linkOriginal:'', titulo:'Beltrão Hoje - Mídia Beltrão @midiabeltrao', desc:'Troque no ADMIN', data:Date.now()}];
+    }
+    if(window.MB_DATA.noticias.length===0){
+      window.MB_DATA.noticias=[{titulo:'Francisco Beltrão ganha novo portal Mídia Beltrão @midiabeltrao', cat:'DESTAQUE', img:'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300', texto:'Portal com vídeos em alta'}];
+    }
+    var v=window.MB_DATA.videos[0];
+    var box=document.getElementById('videoBox');
+    if(!box) return;
+    if(v.tipo==='insta'){
+      var link=(v.linkOriginal||'').replace(/\/$/,'');
+      box.innerHTML='<iframe src="'+link+'/embed" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen></iframe>';
+    } else {
+      box.innerHTML='<iframe src="https://www.youtube.com/embed/'+v.id+'?rel=0&hd=1" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>';
+    }
+    var tv=document.getElementById('tituloVideo'); if(tv) tv.innerText=v.titulo;
+    var dv=document.getElementById('descVideo'); if(dv) dv.innerText=v.desc+' • '+new Date(v.data).toLocaleDateString('pt-BR');
+    var qv=document.getElementById('qtdVideos'); if(qv) qv.innerText=window.MB_DATA.videos.length+' vídeos';
+    var hist=document.getElementById('historicoVideos');
+    if(hist){
+      hist.innerHTML='';
+      window.MB_DATA.videos.forEach(function(vi,i){
+        var thumb=vi.tipo==='youtube'?'https://img.youtube.com/vi/'+vi.id+'/hqdefault.jpg':'https://cdn-icons-png.flaticon.com/512/2111/2111463.png';
+        var dias=Math.floor((Date.now()-(vi.data||Date.now()))/(24*60*60*1000));
+        var item=document.createElement('div');
+        item.className='videoItem';
+        item.dataset.idx=i;
+        item.style.cursor='pointer';
+        item.innerHTML='<img src="'+thumb+'" style="width:80px;height:60px;object-fit:cover;border-radius:6px"><div><div style="font-size:12px;font-weight:800;color:#111">'+vi.titulo+'</div><small style="font-size:10px;opacity:.6;color:#666">'+vi.tipo.toUpperCase()+' • há '+dias+' dias</small><div style="font-size:10px;color:#777">'+vi.desc+'</div></div>';
+        item.addEventListener('click', function(){ window.tocarVideo(parseInt(item.dataset.idx,10)); });
+        hist.appendChild(item);
+      });
+    }
+    window.renderNoticias();
+    window.aplicarEstilos();
+    salvarLocal();
+  }catch(e){ console.warn('[MB] carregarSite', e); }
+};
+window.tocarVideo = function(i){
+  try{
+    var v=window.MB_DATA.videos[i];
+    if(!v) return;
+    window.MB_DATA.videos.splice(i,1);
+    window.MB_DATA.videos.unshift(v);
+    window.scrollTo({top:0, behavior:'smooth'});
+    window.carregarSite();
+  }catch(e){}
+};
+window.renderNoticias = function(){
+  try{
+    var lista=document.getElementById('listaNoticias');
+    if(!lista) return;
+    lista.innerHTML='';
+    window.MB_DATA.noticias.forEach(function(n){
+      lista.innerHTML+='<div class="noticia"><img src="'+n.img+'"><div><small style="color:var(--roxo)">'+n.cat+'</small><h3 style="font-size:13px;color:#111">'+n.titulo+'</h3><p style="font-size:10px;color:#666;margin-top:4px">'+(n.texto||'')+'</p></div></div>';
+    });
+    salvarLocal();
+  }catch(e){}
+};
+window.mbCarregarDados = function(cb){
+  try{
+    fetch('dados.json?t='+Date.now(), {cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw new Error('404'); return r.json(); })
+      .then(function(o){
+        if(Array.isArray(o.videos) && o.videos.length) window.MB_DATA.videos=o.videos;
+        if(Array.isArray(o.noticias) && o.noticias.length) window.MB_DATA.noticias=o.noticias;
+        if(o.config) window.MB_DATA.config=o.config;
+        if(o.style){
+          if(o.style.rgbBg) window.MB_STYLE.rgbBg=Object.assign(window.MB_STYLE.rgbBg, o.style.rgbBg);
+          if(o.style.rgbText) window.MB_STYLE.rgbText=Object.assign(window.MB_STYLE.rgbText, o.style.rgbText);
+        }
+        salvarLocal();
+        if(typeof cb==='function') cb(true);
+      })
+      .catch(function(){ if(typeof cb==='function') cb(false); });
+  }catch(e){ if(typeof cb==='function') cb(false); }
+};
+window.MB = {
+  get data(){ return window.MB_DATA; },
+  set data(v){ window.MB_DATA=v; salvarLocal(); window.carregarSite(); },
+  get style(){ return window.MB_STYLE; },
+  set style(v){ window.MB_STYLE=v; salvarLocal(); window.aplicarEstilos(); },
+  reload:function(){ window.mbCarregarDados(function(){ window.carregarSite(); }); },
+  render:window.carregarSite,
+  applyStyle:window.aplicarEstilos,
+  extrairID:window.extrairID,
+  save:salvarLocal
+};
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('#menuUol p').forEach(function(p){
+    p.addEventListener('click', function(){
+      var id=p.dataset.aba;
+      var painel=document.getElementById('painelUol');
+      var conteudo=document.getElementById('aba-'+id).innerHTML;
+      if(painel.classList.contains('ativo') && painel.dataset.aba===id){ painel.classList.remove('ativo'); return; }
+      painel.innerHTML='<div style="max-width:1300px;margin:0 auto"><b style="color:var(--roxo);font-size:11px">'+id.toUpperCase()+' • MÍDIA BELTRÃO</b><div style="margin-top:8px;color:#ccc">'+conteudo+'</div></div>';
+      painel.dataset.aba=id;
+      painel.classList.add('ativo');
+      document.querySelectorAll('#menuUol p').forEach(function(x){ x.classList.remove('ativo'); });
+      p.classList.add('ativo');
+      document.querySelectorAll('.abaContent').forEach(function(a){ a.style.display='none'; });
+      document.getElementById('aba-'+id).style.display='block';
+    });
+  });
+  window.carregarSite();
+});
+carregarLocal();
+window.mbCarregarDados(function(){ window.carregarSite(); });
+setTimeout(function(){ window.carregarSite(); }, 150);
+console.log('[MB] site pronto');
+})();
+</script>
+
+<style id="dwp-style">
+#dwp-panel{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;background:#0d0419;color:#fff;z-index:9999995;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid rgba(107,76,255,.25);box-shadow:-20px 0 60px rgba(0,0,0,.6);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+#dwp-panel.on{transform:translateX(0)}
+#dwp-panel *{box-sizing:border-box;font-family:inherit}
+#dwp-panel button{font-family:inherit;cursor:pointer;border:0}
+.dwp-edit-outline{outline:2px dashed rgba(107,76,255,.7) !important;outline-offset:2px !important;cursor:crosshair !important}
+.dwp-edit-outline:hover{outline:2px solid #ec4899 !important;background:rgba(236,72,153,.06) !important}
+.dwp-selected{outline:3px solid #22d3ee !important;outline-offset:3px !important;background:rgba(34,211,238,.08) !important}
+#dwp-panel .dwp-btn{border-radius:8px;background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff;padding:10px 14px;font-weight:800;font-size:13px;margin-right:5px;margin-bottom:7px}
+#dwp-panel .dwp-btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(107,76,255,.25)}
+#dwp-panel .dwp-btn.danger{background:#c42040}
+#dwp-panel .dwp-btn.success{background:linear-gradient(135deg,#25d366,#0891b2)}
+#dwp-panel .dwp-btn.github{background:linear-gradient(135deg,#238636,#1f6feb)}
+#dwp-panel .dwp-btn.wide{width:100%}
+#dwp-panel .dwp-btn.small{padding:7px 11px;font-size:12px}
+#dwp-login{position:fixed;inset:0;z-index:9999997;background:rgba(5,2,10,.92);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+#dwp-login.on{display:flex}
+#dwp-login .dwp-login-box{background:#0d0419;border:1px solid rgba(107,76,255,.3);border-radius:18px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.7);color:#fff;text-align:center}
+#dwp-login h2{font-size:20px;font-weight:900;margin:0 0 6px;background:linear-gradient(90deg,#6B4CFF,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#dwp-login p{font-size:13px;color:#a89ec4;margin:0 0 20px}
+#dwp-login input{width:100%;padding:14px 16px;font-size:16px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.3);border-radius:10px;color:#fff;outline:none;font-family:inherit;text-align:center;letter-spacing:2px}
+#dwp-login .dwp-login-actions{display:flex;gap:8px;margin-top:14px}
+#dwp-login .dwp-login-actions button{flex:1;padding:13px;border-radius:10px;font-weight:900;font-size:14px;cursor:pointer;border:0;font-family:inherit}
+#dwp-login .dwp-login-ok{background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff}
+#dwp-login .dwp-login-cancel{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(107,76,255,.2)}
+#dwp-login .dwp-login-err{color:#f87171;font-size:12.5px;font-weight:700;margin-top:12px;min-height:18px}
+#dwp-login .dwp-login-hint{font-size:11px;color:#6b6b80;margin-top:16px}
+.dwp-head{padding:14px 16px;border-bottom:1px solid rgba(107,76,255,.2);display:flex;align-items:center;gap:8px;background:rgba(107,76,255,.06)}
+.dwp-head h2{font-size:15px;font-weight:900;flex:1;margin:0;background:linear-gradient(90deg,#6B4CFF,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dwp-head .dwp-close{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.dwp-head .dwp-lock-badge{font-size:9px;font-weight:900;color:#25d366;background:rgba(37,211,102,.15);padding:3px 7px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase}
+.dwp-tabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(107,76,255,.2);overflow-x:auto;scrollbar-width:none}
+.dwp-tabs::-webkit-scrollbar{display:none}
+.dwp-tab{padding:11px 12px;background:transparent;color:#a89ec4;font-size:12px;font-weight:700;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;cursor:pointer}
+.dwp-tab.on{color:#6B4CFF;border-bottom-color:#6B4CFF;background:rgba(107,76,255,.08)}
+.dwp-body{flex:1;overflow-y:auto;padding:16px}
+.dwp-body::-webkit-scrollbar{width:6px}
+.dwp-body::-webkit-scrollbar-thumb{background:rgba(107,76,255,.3);border-radius:99px}
+.dwp-view{display:none}
+.dwp-view.on{display:block}
+.dwp-field{margin-bottom:13px}
+.dwp-field label{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#6B4CFF;margin-bottom:5px}
+.dwp-field input,.dwp-field textarea,.dwp-field select{width:100%;padding:9px 11px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.25);border-radius:8px;color:#fff;font-size:13px;font-family:inherit;outline:none}
+.dwp-info{padding:11px 13px;border-radius:10px;font-size:12.5px;line-height:1.6;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.3);color:#22d3ee;margin-bottom:13px}
+.dwp-info b{color:#fff}
+.dwp-elem-list{display:flex;flex-direction:column;gap:5px;max-height:60vh;overflow-y:auto;padding-right:4px}
+.dwp-elem{padding:9px 11px;border-radius:7px;background:rgba(107,76,255,.06);border:1px solid rgba(107,76,255,.15);cursor:pointer;font-size:12px}
+.dwp-elem:hover{background:rgba(107,76,255,.12);border-color:rgba(107,76,255,.4)}
+.dwp-elem.on{border-color:#22d3ee;background:rgba(34,211,238,.1)}
+.dwp-elem .dwp-elem-tag{display:inline-block;font-size:10px;font-weight:900;background:rgba(107,76,255,.25);color:#c4b5fd;padding:2px 6px;border-radius:4px;margin-right:5px;text-transform:uppercase}
+.dwp-elem .dwp-elem-txt{color:#ddd;display:inline;word-break:break-word}
+.dwp-datacard{background:rgba(107,76,255,.05);border:1px solid rgba(107,76,255,.2);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.dwp-datacard input,.dwp-datacard textarea{width:100%;padding:8px 10px;background:rgba(0,0,0,.35);border:1px solid rgba(107,76,255,.25);border-radius:7px;color:#fff;font-size:12px;font-family:inherit;outline:none}
+.dwp-datacard .dwp-dc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dwp-datacard .dwp-dc-label{font-size:10px;font-weight:900;color:#6B4CFF;letter-spacing:.5px;text-transform:uppercase}
+.dwp-cat{font-size:10.5px;font-weight:900;color:#6B4CFF;margin:14px 0 7px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(107,76,255,.2);padding-bottom:5px}
+.dwp-toggle{display:flex;align-items:center;gap:9px;padding:10px 12px;background:rgba(107,76,255,.06);border-radius:9px;margin-bottom:6px;cursor:pointer}
+.dwp-toggle input{width:auto;margin:0}
+.dwp-toggle .dwp-tg-lbl{flex:1;font-size:13px;font-weight:700}
+.dwp-toast{position:fixed;bottom:50vh;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff;padding:11px 20px;border-radius:99px;font-weight:800;font-size:14px;z-index:99999999;opacity:0;transition:all .3s;pointer-events:none;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.dwp-toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.dwp-gh-status{font-size:12px;line-height:1.7;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.3);margin-top:8px;word-break:break-word}
+#dwp-inline-editor{position:fixed;z-index:9999998;background:#0d0419;color:#fff;border:2px solid #6B4CFF;border-radius:12px;padding:14px;width:min(400px,90vw);box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:system-ui,sans-serif}
+#dwp-inline-editor .dwp-ie-title{font-size:11px;font-weight:900;color:#6B4CFF;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+#dwp-inline-editor textarea,#dwp-inline-editor input{width:100%;min-height:70px;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.3);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;resize:vertical;outline:none}
+#dwp-inline-editor input{min-height:auto}
+#dwp-inline-editor .dwp-ie-actions{margin-top:10px;display:flex;gap:8px}
+#dwp-inline-editor .dwp-ie-actions button{flex:1;padding:10px;border-radius:8px;font-weight:800;cursor:pointer;font-family:inherit;border:0}
+#dwp-inline-editor .dwp-ie-ok{background:linear-gradient(135deg,#25d366,#0891b2);color:#fff}
+#dwp-inline-editor .dwp-ie-cancel{background:rgba(255,255,255,.08);color:#fff}
+#dwp-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(107,76,255,.3);position:relative;overflow:hidden}
+#dwp-rgb-preview::after{content:'RGB PREVIEW';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:10px;letter-spacing:3px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+#dwp-text-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(236,72,153,.3);position:relative;overflow:hidden;background:#050208;display:flex;align-items:center;justify-content:center}
+#dwp-text-rgb-preview span{font-size:22px;font-weight:900;letter-spacing:2px}
+.dwp-color-row{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.dwp-color-row input[type=color]{width:40px;height:36px;padding:0;border:0;border-radius:8px;cursor:pointer;background:transparent}
+.dwp-slider-row{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.dwp-slider-row input[type=range]{flex:1;accent-color:#6B4CFF}
+.dwp-slider-row .dwp-val{font-size:12px;font-weight:800;color:#6B4CFF;min-width:44px;text-align:right;font-family:ui-monospace,monospace}
+</style>
+
+<div id="dwp-login">
+  <div class="dwp-login-box">
+    <div style="font-size:42px;margin-bottom:12px">🔒</div>
+    <h2>Painel Mídia Beltrão</h2>
+    <p>Digite a senha para acessar</p>
+    <input type="password" id="dwp-login-pass" placeholder="••••••••">
+    <div class="dwp-login-err" id="dwp-login-err"></div>
+    <div class="dwp-login-actions">
+      <button class="dwp-login-cancel" id="dwp-login-cancel" type="button">Cancelar</button>
+      <button class="dwp-login-ok" id="dwp-login-ok" type="button">Entrar</button>
+    </div>
+    <div class="dwp-login-hint">Bloqueado após 5 tentativas</div>
+  </div>
+</div>
+
+<div id="dwp-panel">
+  <div class="dwp-head">
+    <h2>Painel de Edição</h2>
+    <span class="dwp-lock-badge">🔓 aberto</span>
+    <button class="dwp-close" id="dwp-close" type="button">✕</button>
+  </div>
+  <div class="dwp-tabs">
+    <button class="dwp-tab on" data-tab="videos" type="button">🎬 Vídeos</button>
+    <button class="dwp-tab" data-tab="noticias" type="button">📰 Notícias</button>
+    <button class="dwp-tab" data-tab="textos" type="button">📝 Textos</button>
+    <button class="dwp-tab" data-tab="imagens" type="button">🖼️ Imagens</button>
+    <button class="dwp-tab" data-tab="rgb" type="button">🌈 RGB</button>
+    <button class="dwp-tab" data-tab="publicar" type="button">🚀 Publicar</button>
+  </div>
+  <div class="dwp-body">
+
+    <div class="dwp-view on" id="dwp-view-videos">
+      <div class="dwp-info"><b>Vídeos.</b> O primeiro vira o "vídeo do dia".</div>
+      <div class="dwp-datacard">
+        <div class="dwp-dc-label">➕ Novo vídeo</div>
+        <input type="text" id="dwp-v-link" placeholder="Link YouTube ou Instagram">
+        <input type="text" id="dwp-v-titulo" placeholder="Título">
+        <textarea id="dwp-v-desc" rows="2" placeholder="Descrição"></textarea>
+        <button class="dwp-btn" id="dwp-v-add" type="button">➕ Adicionar vídeo</button>
+      </div>
+      <h3 class="dwp-cat">📚 Cadastrados (<span id="dwp-v-count">0</span>)</h3>
+      <div id="dwp-v-list"></div>
+    </div>
+
+    <div class="dwp-view" id="dwp-view-noticias">
+      <div class="dwp-info"><b>Notícias.</b> Ordem = exibição.</div>
+      <div class="dwp-datacard">
+        <div class="dwp-dc-label">➕ Nova notícia</div>
+        <input type="text" id="dwp-n-titulo" placeholder="Título">
+        <input type="text" id="dwp-n-cat" placeholder="Categoria">
+        <input type="text" id="dwp-n-img" placeholder="URL da imagem">
+        <textarea id="dwp-n-texto" rows="2" placeholder="Texto"></textarea>
+        <button class="dwp-btn" id="dwp-n-add" type="button">➕ Adicionar notícia</button>
+      </div>
+      <h3 class="dwp-cat">📰 Cadastradas (<span id="dwp-n-count">0</span>)</h3>
+      <div id="dwp-n-list"></div>
+    </div>
+
+    <div class="dwp-view" id="dwp-view-textos">
+      <div class="dwp-info"><b>Clique em qualquer texto da lista pra editar.</b></div>
+      <div class="dwp-field"><label>Filtrar</label><input type="text" id="dwp-filter" placeholder="Ex: título..."></div>
+      <div class="dwp-elem-list" id="dwp-elem-list"></div>
+    </div>
+
+    <div class="dwp-view" id="dwp-view-imagens">
+      <div class="dwp-info">Substituir URL de imagem.</div>
+      <div class="dwp-field"><label>Filtrar</label><input type="text" id="dwp-img-filter" placeholder="src..."></div>
+      <div class="dwp-elem-list" id="dwp-img-list"></div>
+    </div>
+
+    <div class="dwp-view" id="dwp-view-rgb">
+      <div class="dwp-info"><b>Fundo RGB piscante + RGB nas letras.</b></div>
+
+      <h3 class="dwp-cat">🌌 Fundo RGB</h3>
+      <label class="dwp-toggle">
+        <input type="checkbox" id="dwp-rgb-on">
+        <span class="dwp-tg-lbl">Ativar fundo RGB animado</span>
+      </label>
+      <div id="dwp-rgb-preview"></div>
+
+      <h4 class="dwp-cat">Cores do gradiente</h4>
+      <div class="dwp-color-row">
+        <input type="color" class="dwp-rgb-color" value="#ff0080">
+        <input type="color" class="dwp-rgb-color" value="#7928ca">
+        <input type="color" class="dwp-rgb-color" value="#00d4ff">
+        <input type="color" class="dwp-rgb-color" value="#00ff88">
+        <input type="color" class="dwp-rgb-color" value="#ffcc00">
+      </div>
+
+      <div class="dwp-field">
+        <label>Velocidade</label>
+        <div class="dwp-slider-row">
+          <input type="range" id="dwp-rgb-speed" min="1" max="30" value="14">
+          <span class="dwp-val" id="dwp-rgb-speed-val">14s</span>
+        </div>
+      </div>
+
+      <div class="dwp-field">
+        <label>Intensidade</label>
+        <div class="dwp-slider-row">
+          <input type="range" id="dwp-rgb-opacity" min="0" max="100" value="55">
+          <span class="dwp-val" id="dwp-rgb-opacity-val">55%</span>
+        </div>
+      </div>
+
+      <div class="dwp-field">
+        <label>Direção</label>
+        <select id="dwp-rgb-dir">
+          <option value="120deg">Diagonal ↘</option>
+          <option value="90deg">Horizontal →</option>
+          <option value="180deg">Vertical ↓</option>
+          <option value="45deg">Diagonal ↗</option>
+          <option value="0deg">Horizontal ←</option>
+        </select>
+      </div>
+
+      <div class="dwp-field">
+        <label>Mesclagem</label>
+        <select id="dwp-rgb-blend">
+          <option value="normal">Normal</option>
+          <option value="screen">Screen</option>
+          <option value="overlay">Overlay</option>
+          <option value="multiply">Multiply</option>
+        </select>
+      </div>
+
+      <hr style="border:0;border-top:1px solid rgba(107,76,255,.25);margin:20px 0">
+
+      <h3 class="dwp-cat">🌈 RGB nas letras</h3>
+      <label class="dwp-toggle">
+        <input type="checkbox" id="dwp-txtrgb-on">
+        <span class="dwp-tg-lbl">Ativar RGB nas letras</span>
+      </label>
+      <div id="dwp-text-rgb-preview"><span id="dwp-text-rgb-sample">MÍDIA BELTRÃO</span></div>
+
+      <div class="dwp-field">
+        <label>Modo</label>
+        <select id="dwp-txtrgb-mode">
+          <option value="gradient">Gradiente correndo</option>
+          <option value="flash">Cores piscando</option>
+          <option value="pulse">Pulsar brilho</option>
+          <option value="rainbow">Arco-íris deslizando</option>
+          <option value="neon">Neon pulsante</option>
+          <option value="shake">Tremida</option>
+        </select>
+      </div>
+
+      <div class="dwp-field">
+        <label>Escopo</label>
+        <select id="dwp-txtrgb-scope">
+          <option value="headings">Só títulos</option>
+          <option value="buttons">Só botões/links</option>
+          <option value="headings-buttons">Títulos + botões</option>
+          <option value="all">Tudo que é texto</option>
+        </select>
+      </div>
+
+      <div class="dwp-field">
+        <label>Velocidade</label>
+        <div class="dwp-slider-row">
+          <input type="range" id="dwp-txtrgb-speed" min="1" max="20" value="4">
+          <span class="dwp-val" id="dwp-txtrgb-speed-val">4s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dwp-view" id="dwp-view-publicar">
+      <div class="dwp-info"><b>Baixa dados.json e sobe na raiz do repo.</b></div>
+      <h3 class="dwp-cat">💾 Baixar dados.json</h3>
+      <button class="dwp-btn success wide" id="dwp-export" type="button">📥 Baixar dados.json</button>
+
+      <h3 class="dwp-cat">⚡ Publicar no GitHub</h3>
+      <div class="dwp-datacard">
+        <div class="dwp-dc-label">🔑 Token</div>
+        <input type="password" id="dwp-gh-token" placeholder="github_pat_...">
+        <div class="dwp-dc-row">
+          <input type="text" id="dwp-gh-user" placeholder="usuário" style="flex:1">
+          <input type="text" id="dwp-gh-repo" placeholder="repo" style="flex:1">
+        </div>
+        <div class="dwp-dc-row">
+          <input type="text" id="dwp-gh-path" placeholder="caminho" value="dados.json" style="flex:1">
+          <input type="text" id="dwp-gh-branch" placeholder="branch" value="main" style="flex:1">
+        </div>
+        <div class="dwp-dc-row">
+          <button class="dwp-btn" id="dwp-gh-save" type="button">💾 Salvar</button>
+          <button class="dwp-btn ghost" id="dwp-gh-test" type="button">🔍 Testar</button>
+        </div>
+        <div class="dwp-gh-status" id="dwp-gh-status">Configure e teste.</div>
+      </div>
+      <button class="dwp-btn github wide" id="dwp-gh-publish" type="button">🚀 Publicar AGORA</button>
+
+      <h3 class="dwp-cat">🔒 Segurança</h3>
+      <button class="dwp-btn ghost wide" id="dwp-lock-now" type="button">Bloquear painel</button>
+      <button class="dwp-btn danger wide" id="dwp-clear-local" type="button" style="margin-top:6px">🗑️ Apagar dados locais</button>
+
+      <h3 class="dwp-cat">📊 Status</h3>
+      <div style="background:rgba(107,76,255,.06);border-radius:8px;padding:11px;font-size:12px;line-height:1.8;font-family:ui-monospace,monospace;color:#ddd">
+        <div>Vídeos: <span id="st-videos" style="color:#22d3ee;font-weight:800">0</span></div>
+        <div>Notícias: <span id="st-noticias" style="color:#22d3ee;font-weight:800">0</span></div>
+        <div>Textos editados: <span id="st-texts" style="color:#22d3ee;font-weight:800">0</span></div>
+        <div>Imagens: <span id="st-imgs" style="color:#22d3ee;font-weight:800">0</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="dwp-toast" id="dwp-toast"></div>
+
+<script>
+(function(){
+'use strict';
+var DWP_PASS = 'DOM2027';
+var LS_TEXTS = 'mb_edits_texts_v13';
+var LS_IMGS = 'mb_edits_imgs_v13';
+var LS_GH = 'mb_gh_v13';
+var LS_LOCK = 'mb_lock_v13';
+var LS_ATT = 'mb_att_v13';
+var LS_SESS = 'mb_sess_v13';
+var panelOpen = false, editMode = false, unlocked = false;
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function toast(m){ var t=$('dwp-toast'); if(!t) return; t.textContent=m; t.classList.add('on'); clearTimeout(t._tm); t._tm=setTimeout(function(){ t.classList.remove('on'); }, 2200); }
+function getMB(){
+  if(window.MB_DATA && Array.isArray(window.MB_DATA.videos) && Array.isArray(window.MB_DATA.noticias)) return window.MB_DATA;
+  if(window.MB && window.MB.data) return window.MB.data;
+  return null;
+}
+function getStyle(){
+  if(!window.MB_STYLE) window.MB_STYLE = { rgbBg:{on:false, colors:['#ff0080','#7928ca','#00d4ff','#00ff88','#ffcc00'], speed:14, opacity:55, dir:'120deg', blend:'normal'}, rgbText:{on:false, mode:'gradient', scope:'headings', speed:4} };
+  return window.MB_STYLE;
+}
+function salvarDadosLocal(){
+  try{
+    if(window.MB_DATA) localStorage.setItem('mb_data_local', JSON.stringify(window.MB_DATA));
+    if(window.MB_STYLE) localStorage.setItem('mb_style_local', JSON.stringify(window.MB_STYLE));
+  }catch(e){}
+}
+function reRender(){
+  try{
+    if(window.carregarSite) window.carregarSite();
+    else if(window.MB && window.MB.render) window.MB.render();
+  }catch(e){}
+}
+function aplicarEstilos(){
+  try{
+    if(window.aplicarEstilos) window.aplicarEstilos();
+    else if(window.MB && window.MB.applyStyle) window.MB.applyStyle();
+  }catch(e){}
+}
+var TEXT_SELECTOR = 'h1,h2,h3,h4,h5,h6,p,a,button,span,li,label,figcaption,.cardHead,.slogan,.noticia h3,.noticia small';
+function coletarTextos(){
+  var arr=[];
+  document.querySelectorAll(TEXT_SELECTOR).forEach(function(el){
+    if(el.closest('#dwp-panel') || el.closest('#dwp-login') || el.closest('#dwp-toast') || el.closest('#dwp-inline-editor')) return;
+    var temTexto=false;
+    for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3 && n.nodeValue.trim()){ temTexto=true; break; } }
+    if(!temTexto) return;
+    arr.push(el);
+  });
+  return arr;
+}
+function coletarImagens(){
+  var arr=[];
+  document.querySelectorAll('img').forEach(function(el){
+    if(el.closest('#dwp-panel') || el.closest('#dwp-login')) return;
+    arr.push(el);
+  });
+  return arr;
+}
+function enableEditMode(){
+  editMode=true;
+  coletarTextos().forEach(function(el){ el.classList.add('dwp-edit-outline'); });
+  coletarImagens().forEach(function(el){ el.classList.add('dwp-edit-outline'); });
+}
+function disableEditMode(){
+  editMode=false;
+  document.querySelectorAll('.dwp-edit-outline').forEach(function(el){ el.classList.remove('dwp-edit-outline'); });
+  document.querySelectorAll('.dwp-selected').forEach(function(el){ el.classList.remove('dwp-selected'); });
+  closeInlineEditor();
+}
+function closeInlineEditor(){ var old=$('dwp-inline-editor'); if(old) old.remove(); }
+function showTextEditor(el){
+  closeInlineEditor();
+  var idxEl = coletarTextos().indexOf(el);
+  if(idxEl < 0){ toast('⚠️ Elemento não encontrado'); return; }
+  var currentText='';
+  for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3 && n.nodeValue.trim()){ currentText=n.nodeValue; break; } }
+  var rect=el.getBoundingClientRect();
+  var box=document.createElement('div');
+  box.id='dwp-inline-editor';
+  box.style.top = Math.max(10, Math.min(rect.bottom+10, window.innerHeight-260))+'px';
+  box.style.left = Math.max(10, Math.min(rect.left, window.innerWidth-420))+'px';
+  box.innerHTML='<div class="dwp-ie-title">✏️ Editar &lt;'+el.tagName.toLowerCase()+'&gt;</div>'+
+    '<textarea id="dwp-inline-ta">'+esc(currentText)+'</textarea>'+
+    '<div class="dwp-ie-actions">'+
+      '<button id="dwp-inline-ok" type="button" class="dwp-ie-ok">✓ Salvar</button>'+
+      '<button id="dwp-inline-cancel" type="button" class="dwp-ie-cancel">✕</button>'+
+    '</div>';
+  document.body.appendChild(box);
+  var ta=$('dwp-inline-ta');
+  setTimeout(function(){ ta.focus(); ta.select(); }, 50);
+  $('dwp-inline-ok').onclick=function(){
+    var novo=ta.value;
+    var aplicou=false;
+    for(var i=0;i<el.childNodes.length;i++){
+      var n=el.childNodes[i];
+      if(n.nodeType===3 && n.nodeValue.trim()){ n.nodeValue=novo; aplicou=true; break; }
+    }
+    if(!aplicou) el.textContent=novo;
+    var store=lerTexts();
+    store[idxEl]=novo;
+    salvarTexts(store);
+    toast('✓ Texto salvo');
+    closeInlineEditor();
+    updateStats();
+  };
+  $('dwp-inline-cancel').onclick=closeInlineEditor;
+  ta.addEventListener('keydown', function(e){ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); $('dwp-inline-ok').click(); } });
+}
+function showImageEditor(el){
+  closeInlineEditor();
+  var idxEl = coletarImagens().indexOf(el);
+  if(idxEl < 0){ toast('⚠️ Imagem não encontrada'); return; }
+  var rect=el.getBoundingClientRect();
+  var box=document.createElement('div');
+  box.id='dwp-inline-editor';
+  box.style.top = Math.max(10, Math.min(rect.bottom+10, window.innerHeight-200))+'px';
+  box.style.left = Math.max(10, Math.min(rect.left, window.innerWidth-420))+'px';
+  box.innerHTML='<div class="dwp-ie-title" style="color:#22d3ee">🖼️ Trocar imagem</div>'+
+    '<input id="dwp-inline-src" type="text" value="'+esc(el.getAttribute('src')||'')+'">'+
+    '<div class="dwp-ie-actions">'+
+      '<button id="dwp-inline-ok" type="button" class="dwp-ie-ok">✓ Salvar</button>'+
+      '<button id="dwp-inline-cancel" type="button" class="dwp-ie-cancel">✕</button>'+
+    '</div>';
+  document.body.appendChild(box);
+  var inp=$('dwp-inline-src');
+  setTimeout(function(){ inp.focus(); inp.select(); }, 50);
+  $('dwp-inline-ok').onclick=function(){
+    var novo=inp.value.trim();
+    if(!novo){ toast('Cola uma URL'); return; }
+    el.setAttribute('src', novo);
+    var store=lerImgs();
+    store[idxEl]=novo;
+    salvarImgs(store);
+    toast('✓ Imagem trocada');
+    closeInlineEditor();
+    updateStats();
+  };
+  $('dwp-inline-cancel').onclick=closeInlineEditor;
+}
+function lerTexts(){ try{ var r=localStorage.getItem(LS_TEXTS); return r?JSON.parse(r):{}; }catch(e){ return {}; } }
+function salvarTexts(o){ try{ localStorage.setItem(LS_TEXTS, JSON.stringify(o)); }catch(e){} }
+function lerImgs(){ try{ var r=localStorage.getItem(LS_IMGS); return r?JSON.parse(r):{}; }catch(e){ return {}; } }
+function salvarImgs(o){ try{ localStorage.setItem(LS_IMGS, JSON.stringify(o)); }catch(e){} }
+function aplicarSalvos(){
+  var textosEls = coletarTextos();
+  var textosSalvos = lerTexts();
+  Object.keys(textosSalvos).forEach(function(k){
+    var idx=parseInt(k,10);
+    var el=textosEls[idx];
+    if(!el) return;
+    for(var i=0;i<el.childNodes.length;i++){
+      var n=el.childNodes[i];
+      if(n.nodeType===3 && n.nodeValue.trim()){ n.nodeValue=textosSalvos[k]; return; }
+    }
+    el.textContent=textosSalvos[k];
+  });
+  var imgsEls = coletarImagens();
+  var imgsSalvas = lerImgs();
+  Object.keys(imgsSalvas).forEach(function(k){
+    var idx=parseInt(k,10);
+    var el=imgsEls[idx];
+    if(el) el.setAttribute('src', imgsSalvas[k]);
+  });
+}
+function refreshElementList(){
+  var box=$('dwp-elem-list'); if(!box) return;
+  box.innerHTML='';
+  var filter=($('dwp-filter') && $('dwp-filter').value || '').toLowerCase();
+  var els = coletarTextos();
+  var count=0;
+  els.forEach(function(el, idx){
+    var text='';
+    for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3 && n.nodeValue.trim()){ text=n.nodeValue.trim(); break; } }
+    if(!text) return;
+    if(filter && text.toLowerCase().indexOf(filter)<0 && el.tagName.toLowerCase().indexOf(filter)<0) return;
+    count++;
+    var d=document.createElement('div');
+    d.className='dwp-elem';
+    d.innerHTML='<span class="dwp-elem-tag">'+esc(el.tagName.toLowerCase())+'#'+idx+'</span><span class="dwp-elem-txt">'+esc(text.length>70 ? text.slice(0,70)+'…' : text)+'</span>';
+    d.onclick=function(){
+      document.querySelectorAll('.dwp-elem.on').forEach(function(x){ x.classList.remove('on'); });
+      d.classList.add('on');
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      setTimeout(function(){
+        document.querySelectorAll('.dwp-selected').forEach(function(x){ x.classList.remove('dwp-selected'); });
+        el.classList.add('dwp-selected');
+        showTextEditor(el);
+      }, 400);
+    };
+    box.appendChild(d);
+  });
+  if(count===0) box.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhum texto.</div>';
+}
+function refreshImageList(){
+  var box=$('dwp-img-list'); if(!box) return;
+  box.innerHTML='';
+  var filter=($('dwp-img-filter') && $('dwp-img-filter').value || '').toLowerCase();
+  var els = coletarImagens();
+  var count=0;
+  els.forEach(function(el, idx){
+    var src=el.getAttribute('src')||'';
+    if(filter && src.toLowerCase().indexOf(filter)<0) return;
+    count++;
+    var d=document.createElement('div');
+    d.className='dwp-elem';
+    d.style.display='flex'; d.style.gap='10px'; d.style.alignItems='center';
+    d.innerHTML='<img src="'+esc(src)+'" style="width:44px;height:44px;border-radius:6px;background:#1a0a30;object-fit:cover;flex-shrink:0" onerror="this.style.background=\'#333\'"><div style="flex:1;min-width:0"><div style="font-size:10px;color:#6B4CFF;font-weight:800;text-transform:uppercase">IMG#'+idx+'</div><div style="font-size:11px;color:#a89ec4;word-break:break-all">'+esc(src.slice(0,60))+(src.length>60?'…':'')+'</div></div>';
+    d.onclick=function(){
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      setTimeout(function(){
+        document.querySelectorAll('.dwp-selected').forEach(function(x){ x.classList.remove('dwp-selected'); });
+        el.classList.add('dwp-selected');
+        showImageEditor(el);
+      }, 400);
+    };
+    box.appendChild(d);
+  });
+  if(count===0) box.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhuma imagem.</div>';
+}
+function refreshVideoTab(){
+  var list=$('dwp-v-list'); if(!list) return;
+  list.innerHTML='';
+  var d = getMB();
+  var cnt=$('dwp-v-count');
+  if(!d){ if(cnt) cnt.textContent='0'; list.innerHTML='<div style="text-align:center;color:#f87171;font-size:12px;padding:20px">Aguardando site carregar...</div>'; return; }
+  if(cnt) cnt.textContent = d.videos.length;
+  if(d.videos.length===0){ list.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhum vídeo.</div>'; return; }
+  d.videos.forEach(function(v, i){
+    var card=document.createElement('div');
+    card.className='dwp-datacard';
+    card.innerHTML='<div class="dwp-dc-row"><span class="dwp-dc-label">#'+(i+1)+' '+(v.tipo||'').toUpperCase()+'</span><div style="flex:1"></div><button class="dwp-btn small ghost" data-a="up" type="button">↑</button><button class="dwp-btn small ghost" data-a="down" type="button">↓</button><button class="dwp-btn small danger" data-a="del" type="button">🗑️</button></div>'+
+      '<input type="text" data-f="titulo" value="'+esc(v.titulo||'')+'" placeholder="Título">'+
+      '<textarea rows="2" data-f="desc" placeholder="Descrição">'+esc(v.desc||'')+'</textarea>'+
+      '<input type="text" data-f="link" value="'+esc(v.linkOriginal||'')+'" placeholder="Link original">'+
+      '<div style="font-size:10px;color:#8f86a8;font-family:ui-monospace,monospace">ID: '+esc(v.id||'')+'</div>'+
+      '<button class="dwp-btn" data-a="save" type="button">💾 Salvar alterações</button>';
+    card.querySelector('[data-a="save"]').onclick=function(){
+      var d2=getMB();
+      d2.videos[i].titulo=card.querySelector('[data-f="titulo"]').value;
+      d2.videos[i].desc=card.querySelector('[data-f="desc"]').value;
+      var link=card.querySelector('[data-f="link"]').value.trim();
+      if(link){
+        d2.videos[i].linkOriginal=link;
+        if(window.extrairID){
+          var info=window.extrairID(link);
+          if(info && info.id){ d2.videos[i].id=info.id; d2.videos[i].tipo=info.tipo; }
+        }
+      }
+      salvarDadosLocal();
+      reRender();
+      refreshVideoTab();
+      toast('✓ Vídeo salvo');
+    };
+    card.querySelector('[data-a="up"]').onclick=function(){ if(i<=0) return; var d2=getMB(); var t=d2.videos[i]; d2.videos[i]=d2.videos[i-1]; d2.videos[i-1]=t; salvarDadosLocal(); reRender(); refreshVideoTab(); };
+    card.querySelector('[data-a="down"]').onclick=function(){ var d2=getMB(); if(i>=d2.videos.length-1) return; var t=d2.videos[i]; d2.videos[i]=d2.videos[i+1]; d2.videos[i+1]=t; salvarDadosLocal(); reRender(); refreshVideoTab(); };
+    card.querySelector('[data-a="del"]').onclick=function(){ if(!confirm('Remover?')) return; var d2=getMB(); d2.videos.splice(i,1); salvarDadosLocal(); reRender(); refreshVideoTab(); toast('Vídeo removido'); };
+    list.appendChild(card);
+  });
+}
+function addVideo(){
+  var linkEl=$('dwp-v-link');
+  var link = linkEl ? linkEl.value.trim() : '';
+  if(!link){ toast('Cola um link primeiro'); if(linkEl) linkEl.focus(); return; }
+  var d = getMB();
+  if(!d){ toast('Site ainda não carregou'); return; }
+  var info = window.extrairID ? window.extrairID(link) : {tipo:'youtube', id:link, original:link};
+  if(!info.id){ toast('Link inválido'); return; }
+  var tituloEl=$('dwp-v-titulo');
+  var descEl=$('dwp-v-desc');
+  d.videos.unshift({
+    tipo: info.tipo,
+    id: info.id,
+    linkOriginal: info.original || link,
+    titulo: (tituloEl ? tituloEl.value.trim() : '') || 'Vídeo do dia - Mídia Beltrão',
+    desc: (descEl ? descEl.value.trim() : '') || 'Mídia Beltrão - @midiabeltrao',
+    data: Date.now()
+  });
+  if(linkEl) linkEl.value='';
+  if(tituloEl) tituloEl.value='';
+  if(descEl) descEl.value='';
+  salvarDadosLocal();
+  reRender();
+  refreshVideoTab();
+  updateStats();
+  toast('✓ Vídeo adicionado');
+}
+function refreshNoticiaTab(){
+  var list=$('dwp-n-list'); if(!list) return;
+  list.innerHTML='';
+  var d = getMB();
+  var cnt=$('dwp-n-count');
+  if(!d){ if(cnt) cnt.textContent='0'; list.innerHTML='<div style="text-align:center;color:#f87171;font-size:12px;padding:20px">Aguardando site carregar...</div>'; return; }
+  if(cnt) cnt.textContent = d.noticias.length;
+  if(d.noticias.length===0){ list.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhuma notícia.</div>'; return; }
+  d.noticias.forEach(function(n, i){
+    var card=document.createElement('div');
+    card.className='dwp-datacard';
+    card.innerHTML='<div class="dwp-dc-row"><span class="dwp-dc-label">#'+(i+1)+'</span><div style="flex:1"></div><button class="dwp-btn small ghost" data-a="up" type="button">↑</button><button class="dwp-btn small ghost" data-a="down" type="button">↓</button><button class="dwp-btn small danger" data-a="del" type="button">🗑️</button></div>'+
+      '<input type="text" data-f="titulo" value="'+esc(n.titulo||'')+'" placeholder="Título">'+
+      '<input type="text" data-f="cat" value="'+esc(n.cat||'')+'" placeholder="Categoria">'+
+      '<input type="text" data-f="img" value="'+esc(n.img||'')+'" placeholder="URL da imagem">'+
+      '<textarea rows="2" data-f="texto" placeholder="Texto">'+esc(n.texto||'')+'</textarea>'+
+      '<button class="dwp-btn" data-a="save" type="button">💾 Salvar alterações</button>';
+    card.querySelector('[data-a="save"]').onclick=function(){
+      var d2=getMB();
+      d2.noticias[i].titulo=card.querySelector('[data-f="titulo"]').value;
+      d2.noticias[i].cat=(card.querySelector('[data-f="cat"]').value||'DESTAQUE').toUpperCase();
+      d2.noticias[i].img=card.querySelector('[data-f="img"]').value;
+      d2.noticias[i].texto=card.querySelector('[data-f="texto"]').value;
+      salvarDadosLocal();
+      reRender();
+      refreshNoticiaTab();
+      toast('✓ Notícia salva');
+    };
+    card.querySelector('[data-a="up"]').onclick=function(){ if(i<=0) return; var d2=getMB(); var t=d2.noticias[i]; d2.noticias[i]=d2.noticias[i-1]; d2.noticias[i-1]=t; salvarDadosLocal(); reRender(); refreshNoticiaTab(); };
+    card.querySelector('[data-a="down"]').onclick=function(){ var d2=getMB(); if(i>=d2.noticias.length-1) return; var t=d2.noticias[i]; d2.noticias[i]=d2.noticias[i+1]; d2.noticias[i+1]=t; salvarDadosLocal(); reRender(); refreshNoticiaTab(); };
+    card.querySelector('[data-a="del"]').onclick=function(){ if(!confirm('Remover?')) return; var d2=getMB(); d2.noticias.splice(i,1); salvarDadosLocal(); reRender(); refreshNoticiaTab(); toast('Notícia removida'); };
+    list.appendChild(card);
+  });
+}
+function addNoticia(){
+  var tituloEl=$('dwp-n-titulo');
+  var t = tituloEl ? tituloEl.value.trim() : '';
+  if(!t){ toast('Digite um título'); if(tituloEl) tituloEl.focus(); return; }
+  var d = getMB();
+  if(!d){ toast('Site ainda não carregou'); return; }
+  var catEl=$('dwp-n-cat');
+  var imgEl=$('dwp-n-img');
+  var textoEl=$('dwp-n-texto');
+  d.noticias.unshift({
+    titulo: t,
+    cat: ((catEl ? catEl.value.trim() : '') || 'DESTAQUE').toUpperCase(),
+    img: (imgEl ? imgEl.value.trim() : '') || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300',
+    texto: (textoEl ? textoEl.value.trim() : '') || ''
+  });
+  if(tituloEl) tituloEl.value='';
+  if(catEl) catEl.value='';
+  if(imgEl) imgEl.value='';
+  if(textoEl) textoEl.value='';
+  salvarDadosLocal();
+  reRender();
+  refreshNoticiaTab();
+  updateStats();
+  toast('✓ Notícia adicionada');
+}
+/* RGB painel */
+function renderRgbPreview(){
+  var p=$('dwp-rgb-preview'); if(!p) return;
+  var s=getStyle();
+  p.style.background='linear-gradient('+s.rgbBg.dir+','+s.rgbBg.colors.join(',')+')';
+  p.style.backgroundSize='400% 400%';
+  p.style.animation='dwpRgbShift '+s.rgbBg.speed+'s ease infinite';
+  p.style.opacity=(0.3+s.rgbBg.opacity/200).toFixed(2);
+}
+function renderTextRgbPreview(){
+  var sp=$('dwp-text-rgb-sample'); if(!sp) return;
+  var s=getStyle();
+  var oldS=document.getElementById('dwp-txtrgb-preview-style'); if(oldS) oldS.remove();
+  sp.style.cssText='font-size:22px;font-weight:900;letter-spacing:2px;';
+  if(!s.rgbText.on){ sp.style.color='#fff'; return; }
+  var speed=s.rgbText.speed, mode=s.rgbText.mode;
+  var st=document.createElement('style'); st.id='dwp-txtrgb-preview-style';
+  if(mode==='gradient' || mode==='rainbow'){
+    var colors=mode==='rainbow'?'#ff0080,#ff8c00,#ffcc00,#00ff88,#00d4ff,#7928ca,#ff0080':'#ff0080,#7928ca,#00d4ff,#00ff88,#ffcc00,#ff0080';
+    sp.style.background='linear-gradient(90deg,'+colors+')';
+    sp.style.backgroundSize='400% 400%';
+    sp.style.webkitBackgroundClip='text';
+    sp.style.backgroundClip='text';
+    sp.style.webkitTextFillColor='transparent';
+    sp.style.animation='dwpTextGradient '+speed+'s linear infinite';
+  } else if(mode==='flash'){ sp.style.animation='dwpTextFlash '+speed+'s linear infinite'; }
+  else if(mode==='pulse'){ sp.style.color='#6B4CFF'; sp.style.animation='dwpTextPulse '+speed+'s ease-in-out infinite'; }
+  else if(mode==='neon'){ sp.style.color='#ec4899'; sp.style.animation='dwpTextNeon '+speed+'s ease-in-out infinite'; }
+  else if(mode==='shake'){ sp.style.color='#22d3ee'; sp.style.animation='dwpTextShake '+speed+'s linear infinite'; }
+}
+function syncRgbInputs(){
+  var s=getStyle();
+  if($('dwp-rgb-on')) $('dwp-rgb-on').checked=s.rgbBg.on;
+  if($('dwp-rgb-speed')){ $('dwp-rgb-speed').value=s.rgbBg.speed; $('dwp-rgb-speed-val').textContent=s.rgbBg.speed+'s'; }
+  if($('dwp-rgb-opacity')){ $('dwp-rgb-opacity').value=s.rgbBg.opacity; $('dwp-rgb-opacity-val').textContent=s.rgbBg.opacity+'%'; }
+  if($('dwp-rgb-dir')) $('dwp-rgb-dir').value=s.rgbBg.dir;
+  if($('dwp-rgb-blend')) $('dwp-rgb-blend').value=s.rgbBg.blend;
+  document.querySelectorAll('.dwp-rgb-color').forEach(function(inp,i){ if(s.rgbBg.colors[i]) inp.value=s.rgbBg.colors[i]; });
+  if($('dwp-txtrgb-on')) $('dwp-txtrgb-on').checked=s.rgbText.on;
+  if($('dwp-txtrgb-mode')) $('dwp-txtrgb-mode').value=s.rgbText.mode;
+  if($('dwp-txtrgb-scope')) $('dwp-txtrgb-scope').value=s.rgbText.scope;
+  if($('dwp-txtrgb-speed')){ $('dwp-txtrgb-speed').value=s.rgbText.speed; $('dwp-txtrgb-speed-val').textContent=s.rgbText.speed+'s'; }
+}
+/* AUTH */
+function isLocked(){ try{ var u=parseInt(localStorage.getItem(LS_LOCK)||'0',10); if(u>Date.now()) return true; if(u>0) localStorage.removeItem(LS_LOCK); return false; }catch(e){ return false; } }
+function setLock(){ try{ localStorage.setItem(LS_LOCK, String(Date.now()+600000)); }catch(e){} }
+function getAtt(){ try{ return parseInt(localStorage.getItem(LS_ATT)||'0',10); }catch(e){ return 0; } }
+function setAtt(n){ try{ if(n<=0) localStorage.removeItem(LS_ATT); else localStorage.setItem(LS_ATT, String(n)); }catch(e){} }
+function hasSess(){ try{ return sessionStorage.getItem(LS_SESS)==='1'; }catch(e){ return false; } }
+function setSess(v){ try{ if(v) sessionStorage.setItem(LS_SESS,'1'); else sessionStorage.removeItem(LS_SESS); }catch(e){} }
+function tryLogin(){
+  var e=$('dwp-login-err');
+  if(isLocked()){ if(e) e.textContent='Bloqueado. 10 min.'; return; }
+  var p=$('dwp-login-pass'); var pass = p ? p.value : '';
+  if(!pass){ if(e) e.textContent='Digite a senha.'; return; }
+  if(pass===DWP_PASS){
+    setAtt(0); setSess(true); unlocked=true; closeLogin(); openPanel(); toast('✓ Bem-vindo');
+  } else {
+    var a=getAtt()+1; setAtt(a);
+    if(a>=5){ setLock(); setAtt(0); if(e) e.textContent='Bloqueado 10 min.'; }
+    else { if(e) e.textContent='Senha incorreta ('+a+'/5)'; }
+    if(p){ p.value=''; p.focus(); }
+  }
+}
+function openLogin(){ var el=$('dwp-login'); if(!el) return; el.classList.add('on'); var e=$('dwp-login-err'); if(e) e.textContent=''; var p=$('dwp-login-pass'); if(p) p.value=''; setTimeout(function(){ var p2=$('dwp-login-pass'); if(p2) p2.focus(); }, 100); }
+function closeLogin(){ var el=$('dwp-login'); if(!el) return; el.classList.remove('on'); }
+function requestOpen(){ if(unlocked || hasSess()){ unlocked=true; openPanel(); } else { openLogin(); } }
+function openPanel(){
+  var p=$('dwp-panel'); if(!p) return;
+  p.classList.add('on');
+  panelOpen=true;
+  try{ refreshVideoTab(); }catch(e){}
+  try{ refreshNoticiaTab(); }catch(e){}
+  try{ refreshElementList(); }catch(e){}
+  try{ refreshImageList(); }catch(e){}
+  try{ syncRgbInputs(); renderRgbPreview(); renderTextRgbPreview(); }catch(e){}
+  try{ updateStats(); }catch(e){}
+  try{ ghSyncInputs(); }catch(e){}
+  try{ enableEditMode(); }catch(e){}
+}
+function closePanel(){
+  var p=$('dwp-panel'); if(!p) return;
+  p.classList.remove('on');
+  panelOpen=false;
+  try{ disableEditMode(); }catch(e){}
+}
+function lockNow(){ setSess(false); unlocked=false; closePanel(); toast('🔒 Bloqueado'); }
+function updateStats(){
+  var d=getMB();
+  if($('st-videos')) $('st-videos').textContent = d ? d.videos.length : 0;
+  if($('st-noticias')) $('st-noticias').textContent = d ? d.noticias.length : 0;
+  if($('st-texts')) $('st-texts').textContent = Object.keys(lerTexts()).length;
+  if($('st-imgs')) $('st-imgs').textContent = Object.keys(lerImgs()).length;
+}
+/* GITHUB */
+function ghLoad(){ try{ var r=localStorage.getItem(LS_GH); if(!r) return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; return JSON.parse(r); }catch(e){ return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; } }
+function ghSave(c){ try{ localStorage.setItem(LS_GH, JSON.stringify(c)); }catch(e){} }
+function ghSyncInputs(){
+  var c=ghLoad();
+  if($('dwp-gh-token')) $('dwp-gh-token').value=c.token||'';
+  if($('dwp-gh-user')) $('dwp-gh-user').value=c.user||'';
+  if($('dwp-gh-repo')) $('dwp-gh-repo').value=c.repo||'';
+  if($('dwp-gh-path')) $('dwp-gh-path').value=c.path||'dados.json';
+  if($('dwp-gh-branch')) $('dwp-gh-branch').value=c.branch||'main';
+}
+function ghSaveFromInputs(){
+  var c={
+    token:($('dwp-gh-token') ? $('dwp-gh-token').value.trim() : ''),
+    user:($('dwp-gh-user') ? $('dwp-gh-user').value.trim() : ''),
+    repo:($('dwp-gh-repo') ? $('dwp-gh-repo').value.trim() : ''),
+    path:($('dwp-gh-path') ? $('dwp-gh-path').value.trim() : '') || 'dados.json',
+    branch:($('dwp-gh-branch') ? $('dwp-gh-branch').value.trim() : '') || 'main'
+  };
+  ghSave(c); return c;
+}
+function buildPayload(){
+  var d = getMB() || {videos:[], noticias:[], config:{auto60:false}};
+  return {
+    _meta:{gerado_em:new Date().toISOString(), versao:13},
+    config: d.config || {auto60:false},
+    videos: d.videos || [],
+    noticias: d.noticias || [],
+    style: getStyle(),
+    edits: {texts: lerTexts(), images: lerImgs()}
+  };
+}
+function utf8B64(s){ var b=new TextEncoder().encode(s); var bin=''; for(var i=0;i<b.length;i++) bin+=String.fromCharCode(b[i]); return btoa(bin); }
+function ghApi(c){ return 'https://api.github.com/repos/'+encodeURIComponent(c.user)+'/'+encodeURIComponent(c.repo)+'/contents/'+c.path.split('/').map(encodeURIComponent).join('/'); }
+function ghStatus(m, t){ var el=$('dwp-gh-status'); if(!el) return; el.innerHTML=m; el.style.color = t==='ok' ? '#25d366' : t==='err' ? '#f87171' : '#a89ec4'; }
+async function ghTest(){
+  var c=ghSaveFromInputs();
+  if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche tudo.', 'err'); return; }
+  ghStatus('🔍 Testando...');
+  try{
+    var r=await fetch(ghApi(c)+'?ref='+encodeURIComponent(c.branch), {headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'}});
+    if(r.status===404){ ghStatus('✓ Ok. '+c.path+' será criado.', 'ok'); return; }
+    if(r.status===401){ ghStatus('❌ Token inválido.', 'err'); return; }
+    if(r.status===403){ ghStatus('❌ Sem permissão.', 'err'); return; }
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    ghStatus('✓ Ok. '+c.path+' existe.', 'ok');
+  }catch(e){ ghStatus('❌ '+e.message, 'err'); }
+}
+async function ghPublish(){
+  var c=ghSaveFromInputs();
+  if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche tudo.', 'err'); return; }
+  ghStatus('🚀 Publicando...');
+  var b64=utf8B64(JSON.stringify(buildPayload(), null, 2));
+  var sha=null;
+  try{
+    var h=await fetch(ghApi(c)+'?ref='+encodeURIComponent(c.branch), {headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'}});
+    if(h.ok){ var hj=await h.json(); sha=hj.sha; }
+  }catch(e){}
+  var body={message:'Atualiza dados.json — '+new Date().toLocaleString('pt-BR'), content:b64, branch:c.branch};
+  if(sha) body.sha=sha;
+  try{
+    var r=await fetch(ghApi(c), {method:'PUT', headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json', 'X-GitHub-Api-Version':'2022-11-28'}, body:JSON.stringify(body)});
+    if(!r.ok){ var t=await r.text(); ghStatus('❌ HTTP '+r.status+': '+t.slice(0,150), 'err'); return; }
+    var res=await r.json();
+    var url=res.commit&&res.commit.html_url ? res.commit.html_url : '';
+    ghStatus('✓ Publicado!'+(url?' <a href="'+url+'" target="_blank" style="color:#22d3ee">ver</a>':''), 'ok');
+    toast('✓ Publicado');
+  }catch(e){ ghStatus('❌ '+e.message, 'err'); }
+}
+function exportJson(){
+  var blob=new Blob([JSON.stringify(buildPayload(), null, 2)], {type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dados.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  toast('✓ dados.json gerado');
+}
+function clearLocal(){
+  if(!confirm('Apagar dados locais?')) return;
+  try{ localStorage.removeItem('mb_data_local'); localStorage.removeItem('mb_style_local'); localStorage.removeItem(LS_TEXTS); localStorage.removeItem(LS_IMGS); }catch(e){}
+  toast('✓ Apagado');
+  setTimeout(function(){ location.reload(); }, 800);
+}
+function bindDelegated(){
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t.closest('#menuBtn')){ e.preventDefault(); requestOpen(); return; }
+    if(t.closest('#dwp-close')){ e.preventDefault(); closePanel(); return; }
+    if(t.closest('#dwp-login-ok')){ e.preventDefault(); tryLogin(); return; }
+    if(t.closest('#dwp-login-cancel')){ e.preventDefault(); closeLogin(); return; }
+    var tab = t.closest('.dwp-tab');
+    if(tab && tab.dataset.tab){
+      document.querySelectorAll('.dwp-tab').forEach(function(x){ x.classList.remove('on'); });
+      tab.classList.add('on');
+      document.querySelectorAll('.dwp-view').forEach(function(v){ v.classList.remove('on'); });
+      var v=$('dwp-view-'+tab.dataset.tab);
+      if(v) v.classList.add('on');
+      try{
+        if(tab.dataset.tab==='videos') refreshVideoTab();
+        if(tab.dataset.tab==='noticias') refreshNoticiaTab();
+        if(tab.dataset.tab==='textos') refreshElementList();
+        if(tab.dataset.tab==='imagens') refreshImageList();
+        if(tab.dataset.tab==='rgb'){ syncRgbInputs(); renderRgbPreview(); renderTextRgbPreview(); }
+        if(tab.dataset.tab==='publicar'){ updateStats(); ghSyncInputs(); }
+      }catch(err){}
+      return;
+    }
+    if(t.closest('#dwp-v-add')){ e.preventDefault(); e.stopPropagation(); addVideo(); return; }
+    if(t.closest('#dwp-n-add')){ e.preventDefault(); e.stopPropagation(); addNoticia(); return; }
+    if(t.closest('#dwp-export')){ e.preventDefault(); exportJson(); return; }
+    if(t.closest('#dwp-gh-save')){ e.preventDefault(); ghSaveFromInputs(); toast('✓ Salvo'); ghStatus('✓ Config salva.', 'ok'); return; }
+    if(t.closest('#dwp-gh-test')){ e.preventDefault(); ghTest(); return; }
+    if(t.closest('#dwp-gh-publish')){ e.preventDefault(); ghPublish(); return; }
+    if(t.closest('#dwp-lock-now')){ e.preventDefault(); lockNow(); return; }
+    if(t.closest('#dwp-clear-local')){ e.preventDefault(); clearLocal(); return; }
+    if(editMode && !t.closest('#dwp-panel') && !t.closest('#dwp-login') && !t.closest('#dwp-inline-editor')){
+      var el = t.closest('.dwp-edit-outline');
+      if(el){
+        e.preventDefault(); e.stopPropagation();
+        document.querySelectorAll('.dwp-selected').forEach(function(x){ x.classList.remove('dwp-selected'); });
+        el.classList.add('dwp-selected');
+        if(el.tagName==='IMG') showImageEditor(el);
+        else showTextEditor(el);
+        return;
+      }
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Enter' && e.target && e.target.id==='dwp-login-pass'){ e.preventDefault(); tryLogin(); }
+    if(e.key==='Escape'){
+      if($('dwp-login') && $('dwp-login').classList.contains('on')){ closeLogin(); return; }
+      if(panelOpen){ if($('dwp-inline-editor')) closeInlineEditor(); else closePanel(); }
+    }
+  });
+  document.addEventListener('input', function(e){
+    if(e.target && e.target.id==='dwp-filter') refreshElementList();
+    if(e.target && e.target.id==='dwp-img-filter') refreshImageList();
+  });
+  /* RGB bindings */
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if(!t) return;
+    var s = getStyle();
+    if(t.id==='dwp-rgb-on'){ s.rgbBg.on=t.checked; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-rgb-dir'){ s.rgbBg.dir=t.value; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-rgb-blend'){ s.rgbBg.blend=t.value; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-txtrgb-on'){ s.rgbText.on=t.checked; aplicarEstilos(); salvarDadosLocal(); renderTextRgbPreview(); return; }
+    if(t.id==='dwp-txtrgb-mode'){ s.rgbText.mode=t.value; aplicarEstilos(); salvarDadosLocal(); renderTextRgbPreview(); return; }
+    if(t.id==='dwp-txtrgb-scope'){ s.rgbText.scope=t.value; aplicarEstilos(); salvarDadosLocal(); return; }
+    if(t.classList && t.classList.contains('dwp-rgb-color')){
+      var idx = Array.prototype.indexOf.call(document.querySelectorAll('.dwp-rgb-color'), t);
+      if(idx>=0){ s.rgbBg.colors[idx]=t.value; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); }
+      return;
+    }
+  });
+  document.addEventListener('input', function(e){
+    var t = e.target;
+    if(!t) return;
+    var s = getStyle();
+    if(t.id==='dwp-rgb-speed'){ s.rgbBg.speed=parseInt(t.value,10)||14; $('dwp-rgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-rgb-opacity'){ s.rgbBg.opacity=parseInt(t.value,10)||0; $('dwp-rgb-opacity-val').textContent=t.value+'%'; aplicarEstilos(); salvarDadosLocal(); renderRgbPreview(); return; }
+    if(t.id==='dwp-txtrgb-speed'){ s.rgbText.speed=parseInt(t.value,10)||4; $('dwp-txtrgb-speed-val').textContent=t.value+'s'; aplicarEstilos(); salvarDadosLocal(); renderTextRgbPreview(); return; }
+  });
+}
+window.dwpRequestOpen = requestOpen;
+window.dwpTryLogin = tryLogin;
+function boot(){
+  try{ bindDelegated(); }catch(e){}
+  var tentativas=0;
+  var check=setInterval(function(){
+    tentativas++;
+    if(window.MB_DATA && Array.isArray(window.MB_DATA.videos) && Array.isArray(window.MB_DATA.noticias)){
+      clearInterval(check);
+      try{ aplicarSalvos(); }catch(e){}
+      try{ refreshVideoTab(); }catch(e){}
+      try{ refreshNoticiaTab(); }catch(e){}
+      try{ syncRgbInputs(); renderRgbPreview(); renderTextRgbPreview(); }catch(e){}
+      try{ updateStats(); }catch(e){}
+    }
+    if(tentativas>60) clearInterval(check);
+  }, 100);
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot);
+else setTimeout(boot, 0);
+})();
+</script>
+</body>
+</html>
