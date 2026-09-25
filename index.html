@@ -7,37 +7,463 @@
 <meta name="description" content="Mídia Beltrão - Portal de notícias de Francisco Beltrão PR. Siga @midiabeltrao">
 <meta property="og:image" content="logo.png">
 <style>
-:root{--roxo:#6B4CFF;--black:#080808}
+:root{--roxo:#8b5cf6;--roxo-2:#a855f7;--roxo-deep:#5b21b6;--magenta:#ec4899;--black:#0f0518;--bg:#1a0b2e;--bg-2:#241041;--surface:rgba(36,16,65,.72);--surface-2:rgba(45,20,80,.85);--line:rgba(168,85,247,.28);--text:#f5f0ff;--muted:#b8a8d9}
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
 html,body{overflow-x:hidden;width:100%;max-width:100vw}
-body{background:#ffffff;color:#111111}
-#topUol{background:var(--black);border-bottom:3px solid var(--roxo);padding:10px 3% 14px;display:flex;flex-direction:column;align-items:center;position:sticky;top:0;z-index:100;width:100%;overflow:hidden}
+body{
+  color:var(--text);
+  min-height:100vh;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(168,85,247,.18) 0%, transparent 55%),
+    radial-gradient(90% 60% at 100% 110%, rgba(236,72,153,.15) 0%, transparent 60%),
+    radial-gradient(90% 60% at 0% 100%, rgba(139,92,246,.12) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 50%, #0f0518 100%);
+  background-attachment: fixed;
+}
+
+/* =========================================================
+   NOVO: TOPBAR DE ÚLTIMA HORA (breaking news ticker)
+   ========================================================= */
+#breaking{
+  background: linear-gradient(90deg, var(--roxo-deep), var(--magenta));
+  color: #fff;
+  padding: 8px 3%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  overflow: hidden;
+  position: relative;
+  z-index: 101;
+}
+#breaking .tag-breaking{
+  background: #fff;
+  color: var(--roxo-deep);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  animation: pulseBreaking 1.6s ease-in-out infinite;
+}
+@keyframes pulseBreaking{0%,100%{opacity:1}50%{opacity:.6}}
+#breaking .ticker-track{
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 18px;
+}
+#breaking .ticker-move{
+  display: inline-block;
+  padding-left: 100%;
+  animation: tickerScroll 45s linear infinite;
+  white-space: nowrap;
+}
+@keyframes tickerScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-100%)}
+}
+#breaking .ticker-move b{color: #ffe08a}
+#breaking .ticker-move span{margin: 0 24px}
+#breaking .ticker-move span::after{content:' • ';color: rgba(255,255,255,.4);margin-left: 24px}
+
+/* =========================================================
+   NOVO: HERO DE DESTAQUE (manchete principal)
+   ========================================================= */
+#heroDestaque{
+  max-width: 1300px;
+  margin: 24px auto 0;
+  padding: 0 4%;
+  width: 100%;
+}
+.hero-card{
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 21/9;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 60px rgba(168,85,247,.15);
+  background: #241041;
+  cursor: pointer;
+  transition: transform .4s;
+}
+.hero-card:hover{transform: translateY(-3px)}
+.hero-card img{
+  width: 100%;height: 100%;object-fit: cover;display: block;
+  transition: transform 1s;
+  filter: brightness(.75);
+}
+.hero-card:hover img{transform: scale(1.04);filter: brightness(.85)}
+.hero-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background: linear-gradient(180deg, transparent 30%, rgba(15,5,24,.94) 100%);
+  pointer-events:none;
+}
+.hero-card .hero-content{
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 36px 40px;
+  z-index: 2;
+}
+.hero-card .hero-cat{
+  display: inline-block;
+  background: linear-gradient(135deg, var(--roxo), var(--magenta));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.hero-card h1{
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(24px, 3.6vw, 44px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: #fff;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 20px rgba(0,0,0,.8);
+}
+.hero-card .hero-meta{
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hero-card .hero-meta .dot{width:4px;height:4px;border-radius:50%;background:var(--roxo-2)}
+@media(max-width:700px){
+  .hero-card{aspect-ratio: 4/3}
+  .hero-card .hero-content{padding: 24px 22px}
+}
+
+/* =========================================================
+   NOVO: BARRA DE PREVISÃO / INFO
+   ========================================================= */
+#infoBar{
+  max-width: 1300px;
+  margin: 16px auto 0;
+  padding: 0 4%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.info-chip{
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color .3s;
+}
+.info-chip:hover{border-color: rgba(168,85,247,.6)}
+.info-chip .ic{
+  width: 40px;height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(139,92,246,.3), rgba(236,72,153,.2));
+  display: grid;place-items:center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.info-chip .info-txt{min-width:0}
+.info-chip b{display:block;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+.info-chip span{display:block;font-size:14px;color:var(--text);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:900px){#infoBar{grid-template-columns: repeat(2, 1fr)}}
+
+/* =========================================================
+   NOVO: SEÇÃO "DESTAQUES DA SEMANA" (grid de cards)
+   ========================================================= */
+#destaquesSemana{
+  max-width: 1300px;
+  margin: 40px auto 0;
+  padding: 0 4%;
+  width: 100%;
+}
+.sec-title{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.sec-title .bar{
+  width: 4px;height: 28px;background: linear-gradient(180deg, var(--roxo), var(--magenta));
+  border-radius: 2px;
+}
+.sec-title h2{
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+.sec-title .verTudo{
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--roxo-2);
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color .25s;
+}
+.sec-title .verTudo:hover{color: var(--magenta)}
+
+.destaques-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.destaque-card{
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform .35s, border-color .35s, box-shadow .35s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.destaque-card:hover{
+  transform: translateY(-4px);
+  border-color: rgba(168,85,247,.6);
+  box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 40px rgba(168,85,247,.15);
+}
+.destaque-card .thumb{
+  aspect-ratio: 16/10;
+  background: #241041;
+  overflow: hidden;
+}
+.destaque-card .thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition: transform .6s;
+}
+.destaque-card:hover .thumb img{transform: scale(1.06)}
+.destaque-card .info{
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.destaque-card .cat{
+  display: inline-block;
+  background: rgba(168,85,247,.2);
+  color: var(--roxo-2);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+.destaque-card h3{
+  font-family: 'Sora', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.destaque-card p{
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.destaque-card .meta{
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  font-size: 10.5px;
+  color: var(--muted);
+  align-items: center;
+}
+.destaque-card .meta b{color: var(--roxo-2)}
+@media(max-width:900px){.destaques-grid{grid-template-columns: 1fr}}
+
+/* =========================================================
+   NOVO: NEWSLETTER
+   ========================================================= */
+#newsletter{
+  max-width: 1300px;
+  margin: 40px auto 0;
+  padding: 0 4%;
+  width: 100%;
+}
+.newsletter-box{
+  background: linear-gradient(135deg, rgba(139,92,246,.15), rgba(236,72,153,.1));
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px 36px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.newsletter-box h3{
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: -.02em;
+}
+.newsletter-box p{font-size: 13px;color: var(--muted);line-height: 1.6}
+.newsletter-form{display: flex;gap: 10px;flex-shrink: 0}
+.newsletter-form input{
+  padding: 13px 18px;
+  background: rgba(15,5,24,.5);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  min-width: 260px;
+  font-family: inherit;
+  transition: border-color .25s;
+}
+.newsletter-form input:focus{border-color: var(--roxo-2)}
+.newsletter-form input::placeholder{color: var(--muted)}
+.newsletter-form button{
+  padding: 13px 24px;
+  background: linear-gradient(135deg, var(--roxo), var(--magenta));
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .25s, box-shadow .25s;
+  white-space: nowrap;
+}
+.newsletter-form button:hover{transform: translateY(-2px);box-shadow: 0 12px 30px rgba(168,85,247,.4)}
+@media(max-width:900px){
+  .newsletter-box{grid-template-columns: 1fr;padding: 24px 22px}
+  .newsletter-form{flex-direction: column;width: 100%}
+  .newsletter-form input{min-width: 0;width: 100%}
+}
+
+/* =========================================================
+   NOVO: BOTÃO VOLTAR AO TOPO
+   ========================================================= */
+#toTop{
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 48px;height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--roxo), var(--magenta));
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 8px 24px rgba(168,85,247,.5);
+  z-index: 199;
+  transition: transform .25s;
+  font-family: inherit;
+}
+#toTop.on{display: flex}
+#toTop:hover{transform: translateY(-3px) scale(1.06)}
+
+/* =========================================================
+   NOVO: DOMWEBSITE em RGB no rodapé
+   ========================================================= */
+.dom-rgb{
+  font-weight: 900;
+  background: linear-gradient(90deg,#ff2a7a,#ffb628,#00e5ff,#c800ff,#00ff88,#ff2a7a);
+  background-size: 600% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: domRGB 5s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(255,42,122,.5));
+  text-decoration: none;
+}
+@keyframes domRGB{0%{background-position:0% 50%}100%{background-position:600% 50%}}
+.dom-sign{
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(168,85,247,.15);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: .3px;
+  text-align: center;
+}
+
+/* =========================================================
+   ESTILOS ORIGINAIS (mantidos)
+   ========================================================= */
+#topUol{
+  background:rgba(15,5,24,.85);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-bottom:3px solid var(--roxo);
+  padding:10px 3% 14px;
+  display:flex;flex-direction:column;align-items:center;
+  position:sticky;top:0;z-index:100;
+  width:100%;overflow:hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,.5);
+}
 .topRow{width:100%;display:flex;justify-content:space-between;align-items:center}
-.logoImg{height:72px;width:340px;object-fit:contain;background:#000;border-radius:10px;padding:6px 10px;flex-shrink:0;display:block}
-.slogan{color:#fff;font-style:italic;font-weight:800;font-size:20px;margin-top:10px;letter-spacing:.2px;text-align:center;width:100%}
-#menuBtn{width:42px;height:42px;background:#1a1a1a;border:1px solid #333;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;flex-shrink:0}
-#menuBtn span{width:20px;height:2.5px;background:var(--roxo);display:block;border-radius:2px}
-#menuUol{background:#111;border-bottom:3px solid var(--roxo);padding:0 4%;display:none;flex-direction:column;position:sticky;top:115px;z-index:90;width:100%}
+.logoImg{height:72px;width:340px;object-fit:contain;background:#0f0518;border-radius:10px;padding:6px 10px;flex-shrink:0;display:block;border:1px solid var(--line)}
+.slogan{color:var(--text);font-style:italic;font-weight:800;font-size:20px;margin-top:10px;letter-spacing:.2px;text-align:center;width:100%}
+#menuBtn{width:42px;height:42px;background:rgba(139,92,246,.12);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;flex-shrink:0}
+#menuBtn span{width:20px;height:2.5px;background:var(--roxo-2);display:block;border-radius:2px}
+#menuUol{background:var(--surface);border-bottom:3px solid var(--roxo);padding:0 4%;display:none;flex-direction:column;position:sticky;top:115px;z-index:90;width:100%;backdrop-filter: blur(18px);-webkit-backdrop-filter: blur(18px)}
 #menuUol.ativo{display:flex}
-#menuUol p{padding:16px 0;font-size:12px;font-weight:800;cursor:pointer;border-bottom:1px solid #222;color:#aaa}
-#menuUol p.ativo{color:var(--roxo)}
-#painelUol{display:none;background:#111;border-bottom:3px solid var(--roxo);padding:18px 4%;width:100%}
+#menuUol p{padding:16px 0;font-size:12px;font-weight:800;cursor:pointer;border-bottom:1px solid rgba(168,85,247,.15);color:var(--muted)}
+#menuUol p.ativo{color:var(--roxo-2)}
+#painelUol{display:none;background:var(--surface);border-bottom:3px solid var(--roxo);padding:18px 4%;width:100%;backdrop-filter: blur(18px);-webkit-backdrop-filter: blur(18px)}
 #painelUol.ativo{display:block}
-.wrap{max-width:1300px;margin:0 auto;padding:20px 4%;display:grid;grid-template-columns:1fr 340px;gap:18px;width:100%;box-sizing:border-box;background:#ffffff}
+.wrap{max-width:1300px;margin:0 auto;padding:20px 4%;display:grid;grid-template-columns:1fr 340px;gap:18px;width:100%;box-sizing:border-box}
 @media(max-width:900px){.wrap{grid-template-columns:1fr;padding:14px 3%}.logoImg{height:56px!important;width:250px!important}.slogan{font-size:16px!important;margin-top:6px!important}#menuUol{top:98px}}
-.card{background:#ffffff;border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;width:100%;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-.cardHead{padding:14px 16px;border-left:4px solid var(--roxo);font-weight:800;font-size:13px;background:#f9f9f9;color:#111;display:flex;justify-content:space-between}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;width:100%;box-shadow:0 4px 24px rgba(0,0,0,.35);backdrop-filter: blur(14px);-webkit-backdrop-filter: blur(14px)}
+.cardHead{padding:14px 16px;border-left:4px solid var(--roxo);font-weight:800;font-size:13px;background:rgba(139,92,246,.08);color:var(--text);display:flex;justify-content:space-between;align-items:center}
 .videoBox{position:relative;padding-top:56.25%;background:#000;width:100%}
 .videoBox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.noticia{padding:14px;border-bottom:1px solid #eee;display:flex;gap:12px}
-.noticia img{width:100px;height:70px;object-fit:cover;border-radius:6px;background:#eee;flex-shrink:0}
-#instaFloat{position:fixed;bottom:20px;right:20px;width:62px;height:62px;background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);border-radius:50%;display:grid;place-items:center;text-decoration:none;z-index:200;box-shadow:0 8px 20px rgba(0,0,0,.25);border:2px solid #fff}
+.noticia{padding:14px;border-bottom:1px solid rgba(168,85,247,.15);display:flex;gap:12px}
+.noticia img{width:100px;height:70px;object-fit:cover;border-radius:8px;background:#241041;flex-shrink:0}
+#instaFloat{position:fixed;bottom:20px;right:20px;width:62px;height:62px;background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);border-radius:50%;display:grid;place-items:center;text-decoration:none;z-index:200;box-shadow:0 8px 24px rgba(139,92,246,.5);border:2px solid rgba(245,240,255,.6)}
 #instaFloat svg{width:32px;height:32px;fill:#fff}
-.videoItem{border:1px solid #eee;padding:10px;border-radius:8px;margin-top:8px;display:flex;gap:10px;background:#ffffff}
-.seoFooter{background:#000;color:#777;padding:40px 4%;margin-top:20px;border-top:3px solid var(--roxo);width:100%;box-sizing:border-box}
-.seoFooter a{color:var(--roxo);font-weight:800;text-decoration:none}
+.videoItem{border:1px solid var(--line);padding:10px;border-radius:10px;margin-top:8px;display:flex;gap:10px;background:rgba(36,16,65,.6);transition:border-color .25s}
+.videoItem:hover{border-color:var(--roxo-2)}
+.seoFooter{background:rgba(15,5,24,.92);color:var(--muted);padding:40px 4%;margin-top:20px;border-top:3px solid var(--roxo);width:100%;box-sizing:border-box;backdrop-filter: blur(14px);-webkit-backdrop-filter: blur(14px)}
+.seoFooter h3{color:var(--text);font-family:Sora,sans-serif}
+.seoFooter a{color:var(--roxo-2);font-weight:800;text-decoration:none}
 .tagCloud{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.tagCloud span{background:#f2f2f2;border:1px solid #e5e5e5;padding:5px 10px;border-radius:20px;font-size:10px;color:#111}
+.tagCloud span{background:rgba(139,92,246,.12);border:1px solid var(--line);padding:5px 10px;border-radius:20px;font-size:10px;color:var(--text)}
 #dwp-rgb-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;background-size:400% 400%;animation:dwpRgbShift 14s ease infinite;display:none}
 #dwp-rgb-bg.on{display:block}
 @keyframes dwpRgbShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -46,10 +472,51 @@ body{background:#ffffff;color:#111111}
 @keyframes dwpTextPulse{0%,100%{opacity:1;text-shadow:0 0 8px currentColor}50%{opacity:.55;text-shadow:0 0 20px currentColor,0 0 30px currentColor}}
 @keyframes dwpTextNeon{0%,100%{text-shadow:0 0 5px currentColor}50%{text-shadow:0 0 20px currentColor,0 0 30px currentColor,0 0 40px currentColor}}
 @keyframes dwpTextShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-1px)}75%{transform:translateX(1px)}}
+/* OVERRIDES */
+[style*="color:#111"]{color:var(--text) !important}
+[style*="color:#555"]{color:var(--muted) !important}
+[style*="color:#666"]{color:var(--muted) !important}
+[style*="color:#777"]{color:var(--muted) !important}
+[style*="color:#999"]{color:var(--muted) !important}
+[style*="color:#aaa"]{color:var(--muted) !important}
+[style*="color:#ddd"]{color:var(--text) !important}
+[style*="color:#ccc"]{color:var(--text) !important}
+[style*="background:#fafafa"]{background:rgba(139,92,246,.08) !important;border-color:var(--line) !important}
+[style*="background:#f2f2f2"]{background:rgba(139,92,246,.12) !important;border-color:var(--line) !important}
+[style*="background:#eee"]{background:rgba(139,92,246,.12) !important}
+[style*="border:1px solid #eee"]{border-color:var(--line) !important}
+[style*="border:1px dashed #ddd"]{border-color:var(--line) !important}
+[style*="border-bottom:1px solid #eee"]{border-color:rgba(168,85,247,.15) !important}
+[style*="background:#ffffff"]{background:var(--surface) !important}
+[style*="background:#fff"]{background:var(--surface) !important}
+[style*="background:#f9f9f9"]{background:rgba(139,92,246,.08) !important}
+.noticia small{color:var(--roxo-2) !important;font-weight:800}
+.noticia h3{color:var(--text) !important}
+.noticia p{color:var(--muted) !important}
+#aba-destaque b, #aba-cultura b, #aba-lazer b, #aba-esporte b, #aba-economia b, #aba-parceiros b{color:var(--roxo-2)}
+#aba-destaque p, #aba-cultura p, #aba-lazer p, #aba-esporte p, #aba-economia p, #aba-parceiros p{color:var(--muted)}
+#aba-parceiros div{color:var(--muted) !important}
+#aba-parceiros a{color:var(--roxo-2) !important}
+#tituloVideo{color:var(--text) !important}
+#descVideo{color:var(--muted) !important}
+a[href*="wa.me"]{transition:transform .2s, box-shadow .25s}
+a[href*="wa.me"]:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(139,92,246,.45)}
 </style>
 </head>
 <body>
 <div id="dwp-rgb-bg"></div>
+
+<!-- BREAKING NEWS TICKER -->
+<div id="breaking">
+  <span class="tag-breaking">🔴 AGORA</span>
+  <div class="ticker-track">
+    <div class="ticker-move" id="tickerMove">
+      <span><b>Mídia Beltrão</b> — informação que conecta Francisco Beltrão 24h</span>
+      <span>Siga <b>@midiabeltrao</b> no Instagram para ficar por dentro</span>
+      <span>Anuncie aqui: <b>R$ 97/mês</b> — WhatsApp (46) 99121-9785</span>
+    </div>
+  </div>
+</div>
 
 <div id="topUol">
 <div class="topRow">
@@ -69,34 +536,115 @@ body{background:#ffffff;color:#111111}
 <p data-aba="parceiros">☰ PARCEIROS</p>
 </div>
 <div id="painelUol"></div>
+
+<!-- HERO DE DESTAQUE -->
+<section id="heroDestaque">
+  <div class="hero-card" id="heroCard">
+    <img id="heroImg" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600" alt="Destaque Mídia Beltrão">
+    <div class="hero-content">
+      <span class="hero-cat" id="heroCat">DESTAQUE</span>
+      <h1 id="heroTitulo">Mídia Beltrão — informação que conecta Francisco Beltrão 24h</h1>
+      <div class="hero-meta">
+        <span id="heroData">Hoje</span>
+        <span class="dot"></span>
+        <span>Por <b style="color:var(--roxo-2)">Mídia Beltrão</b></span>
+        <span class="dot"></span>
+        <span>📍 Francisco Beltrão / PR</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO BAR -->
+<div id="infoBar">
+  <div class="info-chip">
+    <div class="ic">📍</div>
+    <div class="info-txt">
+      <b>Localização</b>
+      <span>Francisco Beltrão / PR</span>
+    </div>
+  </div>
+  <div class="info-chip">
+    <div class="ic">📅</div>
+    <div class="info-txt">
+      <b>Hoje é</b>
+      <span id="chipDia">—</span>
+    </div>
+  </div>
+  <div class="info-chip">
+    <div class="ic">🕒</div>
+    <div class="info-txt">
+      <b>Agora são</b>
+      <span id="chipHora">—</span>
+    </div>
+  </div>
+  <div class="info-chip">
+    <div class="ic">📰</div>
+    <div class="info-txt">
+      <b>Publicações</b>
+      <span id="chipCount">—</span>
+    </div>
+  </div>
+</div>
+
 <div class="wrap">
 <div>
-<div class="card"><div class="cardHead"><span>📺 VÍDEO DO DIA - ALTA RESOLUÇÃO</span><small id="qtdVideos" style="opacity:.5"></small></div><div class="videoBox" id="videoBox"><iframe id="videoDia" src="" allowfullscreen></iframe></div><div style="padding:14px"><h2 id="tituloVideo" style="font-size:26px;font-weight:900;letter-spacing:-0.5px"></h2><p id="descVideo" style="font-size:12px;opacity:.7;margin-top:8px;color:#555"></p></div></div>
+<div class="card"><div class="cardHead"><span>📺 VÍDEO DO DIA - ALTA RESOLUÇÃO</span><small id="qtdVideos" style="opacity:.6;color:var(--muted)"></small></div><div class="videoBox" id="videoBox"><iframe id="videoDia" src="" allowfullscreen></iframe></div><div style="padding:14px"><h2 id="tituloVideo" style="font-size:26px;font-weight:900;letter-spacing:-0.5px;color:var(--text)"></h2><p id="descVideo" style="font-size:12px;opacity:.9;margin-top:8px;color:var(--muted)"></p></div></div>
 <div class="card" style="margin-top:14px"><div class="cardHead">📚 TODOS OS VÍDEOS - HISTÓRICO</div><div id="historicoVideos" style="padding:8px"></div></div>
 <div class="card" style="margin-top:14px"><div class="cardHead">Últimas notícias</div><div id="listaNoticias"></div></div>
 </div>
 <div>
 <div class="card"><div class="cardHead">🗂️ CONTEÚDO DA ABA</div>
-<div id="aba-destaque" class="abaContent" style="display:block;padding:14px"><b>Notícias em Destaque</b><p style="font-size:11px;margin-top:8px">Notícias quentes de Beltrão 24h.</p></div>
-<div id="aba-cultura" class="abaContent" style="display:none;padding:14px"><b>Cultura</b><p style="font-size:11px">Agenda cultural Beltrão.</p></div>
-<div id="aba-lazer" class="abaContent" style="display:none;padding:14px"><b>Lazer</b><p style="font-size:11px">Onde ir hoje.</p></div>
-<div id="aba-esporte" class="abaContent" style="display:none;padding:14px"><b>Esporte</b><p style="font-size:11px">Esporte local.</p></div>
-<div id="aba-economia" class="abaContent" style="display:none;padding:14px"><b>Economia</b><p style="font-size:11px">Comércio e vagas.</p></div>
-<div id="aba-parceiros" class="abaContent" style="display:none;padding:14px"><b>Parceiros</b><div style="font-size:11px;margin-top:8px">Anuncie R$97/mês<br><br><a href="https://wa.me/5546991219785" style="background:var(--roxo);color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none">ANUNCIAR</a><br><br>Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr">@midiabeltrao</a></div></div>
+<div id="aba-destaque" class="abaContent" style="display:block;padding:14px"><b style="color:var(--roxo-2)">Notícias em Destaque</b><p style="font-size:11px;margin-top:8px;color:var(--muted)">Notícias quentes de Beltrão 24h.</p></div>
+<div id="aba-cultura" class="abaContent" style="display:none;padding:14px"><b style="color:var(--roxo-2)">Cultura</b><p style="font-size:11px;color:var(--muted)">Agenda cultural Beltrão.</p></div>
+<div id="aba-lazer" class="abaContent" style="display:none;padding:14px"><b style="color:var(--roxo-2)">Lazer</b><p style="font-size:11px;color:var(--muted)">Onde ir hoje.</p></div>
+<div id="aba-esporte" class="abaContent" style="display:none;padding:14px"><b style="color:var(--roxo-2)">Esporte</b><p style="font-size:11px;color:var(--muted)">Esporte local.</p></div>
+<div id="aba-economia" class="abaContent" style="display:none;padding:14px"><b style="color:var(--roxo-2)">Economia</b><p style="font-size:11px;color:var(--muted)">Comércio e vagas.</p></div>
+<div id="aba-parceiros" class="abaContent" style="display:none;padding:14px"><b style="color:var(--roxo-2)">Parceiros</b><div style="font-size:11px;margin-top:8px;color:var(--muted)">Anuncie R$97/mês<br><br><a href="https://wa.me/5546991219785" style="background:linear-gradient(135deg,var(--roxo),var(--magenta));color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none;font-weight:800">ANUNCIAR</a><br><br>Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" style="color:var(--roxo-2);font-weight:800">@midiabeltrao</a></div></div>
 </div>
-<div class="card" style="margin-top:14px;padding:16px;text-align:center"><b style="font-size:11px;color:var(--roxo)">PUBLICIDADE R$97/mês</b><div style="margin-top:10px;background:#fafafa;height:220px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;border:1px dashed #ddd;color:#999">Seu anúncio 300x250</div></div>
+<div class="card" style="margin-top:14px;padding:16px;text-align:center"><b style="font-size:11px;color:var(--roxo-2)">PUBLICIDADE R$97/mês</b><div style="margin-top:10px;background:rgba(139,92,246,.08);height:220px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;border:1px dashed var(--line);color:var(--muted)">Seu anúncio 300x250</div></div>
 </div>
 </div>
+
+<!-- DESTAQUES DA SEMANA -->
+<section id="destaquesSemana">
+  <div class="sec-title">
+    <span class="bar"></span>
+    <h2>Destaques da semana</h2>
+    <a href="#" class="verTudo" onclick="event.preventDefault()">Ver tudo →</a>
+  </div>
+  <div class="destaques-grid" id="destaquesGrid"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="newsletter-box">
+    <div>
+      <h3>📬 Receba as notícias no e-mail</h3>
+      <p>Toda semana um resumo do que rolou em Francisco Beltrão. Sem spam, é só o essencial.</p>
+    </div>
+    <form class="newsletter-form" id="newsForm">
+      <input type="email" id="newsEmail" placeholder="seu@email.com" required>
+      <button type="submit">Assinar</button>
+    </form>
+  </div>
+</section>
 
 <a id="instaFloat" href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" target="_blank" aria-label="Instagram @midiabeltrao">
 <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
 </a>
 
+<!-- BOTÃO VOLTAR AO TOPO -->
+<button id="toTop" aria-label="Voltar ao topo">▲</button>
+
 <div class="seoFooter">
-<h3 style="color:#fff">MÍDIA BELTRÃO - PORTAL DE NOTÍCIAS FRANCISCO BELTRÃO PR - @midiabeltrao</h3>
-<p style="margin-top:10px;font-size:11px;line-height:1.9;color:#aaa">Portal <b style="color:#fff">Mídia Beltrão</b>. Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" target="_blank">@midiabeltrao</a></p>
+<h3 style="color:var(--text)">MÍDIA BELTRÃO - PORTAL DE NOTÍCIAS FRANCISCO BELTRÃO PR - @midiabeltrao</h3>
+<p style="margin-top:10px;font-size:11px;line-height:1.9;color:var(--muted)">Portal <b style="color:var(--text)">Mídia Beltrão</b>. Siga <a href="https://www.instagram.com/midiabeltrao?igsh=MWVrc2RidjZzbGpmeA==&utm_source=qr" target="_blank">@midiabeltrao</a></p>
 <div class="tagCloud"><span>notícias Francisco Beltrão</span><span>Mídia Beltrão</span><span>@midiabeltrao</span></div>
-<p style="margin-top:20px;font-size:9px;opacity:.3">© 2026 MÍDIA BELTRÃO</p>
+<p style="margin-top:20px;font-size:9px;opacity:.4">© 2026 MÍDIA BELTRÃO</p>
+<div class="dom-sign">
+  Feito por <a href="https://wa.me/5546991219785" target="_blank" rel="noopener" class="dom-rgb">DomWebsite</a>
+</div>
 </div>
 
 <script>
@@ -196,13 +744,100 @@ window.aplicarRgbTexto = function(){
   document.head.appendChild(st);
 };
 window.aplicarEstilos = function(){ window.aplicarRgbFundo(); window.aplicarRgbTexto(); };
+
+/* =========================================================
+   NOVO: renderiza hero, chips, destaques, ticker
+   ========================================================= */
+window.renderNovos = function(){
+  var d = window.MB_DATA;
+  // HERO
+  var primeira = d.noticias[0];
+  if(primeira){
+    var heroImg = document.getElementById('heroImg');
+    var heroCat = document.getElementById('heroCat');
+    var heroTitulo = document.getElementById('heroTitulo');
+    var heroData = document.getElementById('heroData');
+    if(heroImg && primeira.img) heroImg.src = primeira.img;
+    if(heroCat && primeira.cat) heroCat.textContent = primeira.cat;
+    if(heroTitulo) heroTitulo.textContent = primeira.titulo;
+    if(heroData) heroData.textContent = new Date().toLocaleDateString('pt-BR', {day:'2-digit', month:'long'});
+  }
+  // CHIP COUNT
+  var chipCount = document.getElementById('chipCount');
+  if(chipCount) chipCount.textContent = (d.noticias.length + d.videos.length) + ' itens';
+  // DESTAQUES (até 3 notícias)
+  var grid = document.getElementById('destaquesGrid');
+  if(grid){
+    grid.innerHTML='';
+    var lista = d.noticias.slice(0, 3);
+    if(lista.length===0){ grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);padding:30px">Nenhum destaque ainda. Cadastre notícias no painel.</div>'; }
+    lista.forEach(function(n){
+      var card = document.createElement('div');
+      card.className = 'destaque-card';
+      card.innerHTML = '<div class="thumb"><img src="'+(n.img||'')+'" alt=""></div>'+
+        '<div class="info">'+
+          '<span class="cat">'+(n.cat||'DESTAQUE')+'</span>'+
+          '<h3>'+n.titulo+'</h3>'+
+          '<p>'+(n.texto||'')+'</p>'+
+          '<div class="meta"><b>Mídia Beltrão</b> <span>•</span> <span>leitura rápida</span></div>'+
+        '</div>';
+      card.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+      grid.appendChild(card);
+    });
+  }
+  // TICKER (atualiza com notícias)
+  var tm = document.getElementById('tickerMove');
+  if(tm && d.noticias.length > 0){
+    tm.innerHTML = d.noticias.slice(0,5).map(function(n){
+      return '<span><b>'+n.cat+'</b> — '+n.titulo+'</span>';
+    }).join('') + '<span>Siga <b>@midiabeltrao</b> no Instagram</span>';
+  }
+};
+
+/* RELÓGIO + DATA */
+function atualizarRelogio(){
+  var agora = new Date();
+  var dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+  var chipDia = document.getElementById('chipDia');
+  var chipHora = document.getElementById('chipHora');
+  if(chipDia) chipDia.textContent = dias[agora.getDay()];
+  if(chipHora) chipHora.textContent = agora.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+}
+setInterval(atualizarRelogio, 30000);
+atualizarRelogio();
+
+/* VOLTAR AO TOPO */
+window.addEventListener('scroll', function(){
+  var bt = document.getElementById('toTop');
+  if(!bt) return;
+  if(window.scrollY > 400) bt.classList.add('on');
+  else bt.classList.remove('on');
+}, {passive:true});
+document.getElementById('toTop').addEventListener('click', function(){
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* NEWSLETTER */
+document.getElementById('newsForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var email = document.getElementById('newsEmail').value.trim();
+  if(!email) return;
+  alert('✓ Inscrição registrada! Em breve você recebe nosso resumo.');
+  document.getElementById('newsEmail').value='';
+});
+
+/* HERO clicável */
+document.getElementById('heroCard').addEventListener('click', function(){
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
 window.carregarSite = function(){
   try{
     if(window.MB_DATA.videos.length===0){
       window.MB_DATA.videos=[{tipo:'youtube', id:'jNQXAC9IVRw', linkOriginal:'', titulo:'Beltrão Hoje - Mídia Beltrão @midiabeltrao', desc:'Troque no ADMIN', data:Date.now()}];
     }
     if(window.MB_DATA.noticias.length===0){
-      window.MB_DATA.noticias=[{titulo:'Francisco Beltrão ganha novo portal Mídia Beltrão @midiabeltrao', cat:'DESTAQUE', img:'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300', texto:'Portal com vídeos em alta'}];
+      window.MB_DATA.noticias=[{titulo:'Francisco Beltrão ganha novo portal Mídia Beltrão @midiabeltrao', cat:'DESTAQUE', img:'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200', texto:'Portal com vídeos em alta definição, notícias quentes e cobertura completa do que acontece na cidade.'}];
     }
     var v=window.MB_DATA.videos[0];
     var box=document.getElementById('videoBox');
@@ -226,12 +861,13 @@ window.carregarSite = function(){
         item.className='videoItem';
         item.dataset.idx=i;
         item.style.cursor='pointer';
-        item.innerHTML='<img src="'+thumb+'" style="width:80px;height:60px;object-fit:cover;border-radius:6px"><div><div style="font-size:12px;font-weight:800;color:#111">'+vi.titulo+'</div><small style="font-size:10px;opacity:.6;color:#666">'+vi.tipo.toUpperCase()+' • há '+dias+' dias</small><div style="font-size:10px;color:#777">'+vi.desc+'</div></div>';
+        item.innerHTML='<img src="'+thumb+'" style="width:80px;height:60px;object-fit:cover;border-radius:6px"><div><div style="font-size:12px;font-weight:800;color:var(--text)">'+vi.titulo+'</div><small style="font-size:10px;opacity:.8;color:var(--muted)">'+vi.tipo.toUpperCase()+' • há '+dias+' dias</small><div style="font-size:10px;color:var(--muted)">'+vi.desc+'</div></div>';
         item.addEventListener('click', function(){ window.tocarVideo(parseInt(item.dataset.idx,10)); });
         hist.appendChild(item);
       });
     }
     window.renderNoticias();
+    window.renderNovos();
     window.aplicarEstilos();
     salvarLocal();
   }catch(e){ console.warn('[MB] carregarSite', e); }
@@ -252,7 +888,7 @@ window.renderNoticias = function(){
     if(!lista) return;
     lista.innerHTML='';
     window.MB_DATA.noticias.forEach(function(n){
-      lista.innerHTML+='<div class="noticia"><img src="'+n.img+'"><div><small style="color:var(--roxo)">'+n.cat+'</small><h3 style="font-size:13px;color:#111">'+n.titulo+'</h3><p style="font-size:10px;color:#666;margin-top:4px">'+(n.texto||'')+'</p></div></div>';
+      lista.innerHTML+='<div class="noticia"><img src="'+n.img+'"><div><small style="color:var(--roxo-2)">'+n.cat+'</small><h3 style="font-size:13px;color:var(--text)">'+n.titulo+'</h3><p style="font-size:10px;color:var(--muted);margin-top:4px">'+(n.texto||'')+'</p></div></div>';
     });
     salvarLocal();
   }catch(e){}
@@ -293,7 +929,7 @@ document.addEventListener('DOMContentLoaded', function(){
       var painel=document.getElementById('painelUol');
       var conteudo=document.getElementById('aba-'+id).innerHTML;
       if(painel.classList.contains('ativo') && painel.dataset.aba===id){ painel.classList.remove('ativo'); return; }
-      painel.innerHTML='<div style="max-width:1300px;margin:0 auto"><b style="color:var(--roxo);font-size:11px">'+id.toUpperCase()+' • MÍDIA BELTRÃO</b><div style="margin-top:8px;color:#ccc">'+conteudo+'</div></div>';
+      painel.innerHTML='<div style="max-width:1300px;margin:0 auto"><b style="color:var(--roxo-2);font-size:11px">'+id.toUpperCase()+' • MÍDIA BELTRÃO</b><div style="margin-top:8px;color:var(--text)">'+conteudo+'</div></div>';
       painel.dataset.aba=id;
       painel.classList.add('ativo');
       document.querySelectorAll('#menuUol p').forEach(function(x){ x.classList.remove('ativo'); });
@@ -312,85 +948,85 @@ console.log('[MB] site pronto');
 </script>
 
 <style id="dwp-style">
-#dwp-panel{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;background:#0d0419;color:#fff;z-index:9999995;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid rgba(107,76,255,.25);box-shadow:-20px 0 60px rgba(0,0,0,.6);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
+#dwp-panel{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:100vw;background:#1a0b2e;color:#f5f0ff;z-index:9999995;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;border-left:1px solid rgba(168,85,247,.3);box-shadow:-20px 0 60px rgba(0,0,0,.7);font-family:-apple-system,'Segoe UI',Roboto,sans-serif;font-size:14px;line-height:1.5}
 #dwp-panel.on{transform:translateX(0)}
 #dwp-panel *{box-sizing:border-box;font-family:inherit}
 #dwp-panel button{font-family:inherit;cursor:pointer;border:0}
-.dwp-edit-outline{outline:2px dashed rgba(107,76,255,.7) !important;outline-offset:2px !important;cursor:crosshair !important}
+.dwp-edit-outline{outline:2px dashed rgba(168,85,247,.7) !important;outline-offset:2px !important;cursor:crosshair !important}
 .dwp-edit-outline:hover{outline:2px solid #ec4899 !important;background:rgba(236,72,153,.06) !important}
 .dwp-selected{outline:3px solid #22d3ee !important;outline-offset:3px !important;background:rgba(34,211,238,.08) !important}
-#dwp-panel .dwp-btn{border-radius:8px;background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff;padding:10px 14px;font-weight:800;font-size:13px;margin-right:5px;margin-bottom:7px}
-#dwp-panel .dwp-btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(107,76,255,.25)}
+#dwp-panel .dwp-btn{border-radius:8px;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;padding:10px 14px;font-weight:800;font-size:13px;margin-right:5px;margin-bottom:7px}
+#dwp-panel .dwp-btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(168,85,247,.3)}
 #dwp-panel .dwp-btn.danger{background:#c42040}
 #dwp-panel .dwp-btn.success{background:linear-gradient(135deg,#25d366,#0891b2)}
 #dwp-panel .dwp-btn.github{background:linear-gradient(135deg,#238636,#1f6feb)}
 #dwp-panel .dwp-btn.wide{width:100%}
 #dwp-panel .dwp-btn.small{padding:7px 11px;font-size:12px}
-#dwp-login{position:fixed;inset:0;z-index:9999997;background:rgba(5,2,10,.92);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
+#dwp-login{position:fixed;inset:0;z-index:9999997;background:rgba(15,5,24,.94);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif}
 #dwp-login.on{display:flex}
-#dwp-login .dwp-login-box{background:#0d0419;border:1px solid rgba(107,76,255,.3);border-radius:18px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.7);color:#fff;text-align:center}
-#dwp-login h2{font-size:20px;font-weight:900;margin:0 0 6px;background:linear-gradient(90deg,#6B4CFF,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-#dwp-login p{font-size:13px;color:#a89ec4;margin:0 0 20px}
-#dwp-login input{width:100%;padding:14px 16px;font-size:16px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.3);border-radius:10px;color:#fff;outline:none;font-family:inherit;text-align:center;letter-spacing:2px}
+#dwp-login .dwp-login-box{background:#1a0b2e;border:1px solid rgba(168,85,247,.35);border-radius:18px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.8),0 0 60px rgba(168,85,247,.15);color:#f5f0ff;text-align:center}
+#dwp-login h2{font-size:20px;font-weight:900;margin:0 0 6px;background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#dwp-login p{font-size:13px;color:#b8a8d9;margin:0 0 20px}
+#dwp-login input{width:100%;padding:14px 16px;font-size:16px;background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.35);border-radius:10px;color:#f5f0ff;outline:none;font-family:inherit;text-align:center;letter-spacing:2px}
 #dwp-login .dwp-login-actions{display:flex;gap:8px;margin-top:14px}
 #dwp-login .dwp-login-actions button{flex:1;padding:13px;border-radius:10px;font-weight:900;font-size:14px;cursor:pointer;border:0;font-family:inherit}
-#dwp-login .dwp-login-ok{background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff}
-#dwp-login .dwp-login-cancel{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(107,76,255,.2)}
+#dwp-login .dwp-login-ok{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff}
+#dwp-login .dwp-login-cancel{background:rgba(255,255,255,.06);color:#f5f0ff;border:1px solid rgba(168,85,247,.25)}
 #dwp-login .dwp-login-err{color:#f87171;font-size:12.5px;font-weight:700;margin-top:12px;min-height:18px}
-#dwp-login .dwp-login-hint{font-size:11px;color:#6b6b80;margin-top:16px}
-.dwp-head{padding:14px 16px;border-bottom:1px solid rgba(107,76,255,.2);display:flex;align-items:center;gap:8px;background:rgba(107,76,255,.06)}
-.dwp-head h2{font-size:15px;font-weight:900;flex:1;margin:0;background:linear-gradient(90deg,#6B4CFF,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.dwp-head .dwp-close{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center}
+#dwp-login .dwp-login-hint{font-size:11px;color:#7a6a99;margin-top:16px}
+.dwp-head{padding:14px 16px;border-bottom:1px solid rgba(168,85,247,.25);display:flex;align-items:center;gap:8px;background:rgba(168,85,247,.08)}
+.dwp-head h2{font-size:15px;font-weight:900;flex:1;margin:0;background:linear-gradient(90deg,#a855f7,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.dwp-head .dwp-close{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#f5f0ff;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .dwp-head .dwp-lock-badge{font-size:9px;font-weight:900;color:#25d366;background:rgba(37,211,102,.15);padding:3px 7px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase}
-.dwp-tabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(107,76,255,.2);overflow-x:auto;scrollbar-width:none}
+.dwp-tabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(168,85,247,.25);overflow-x:auto;scrollbar-width:none}
 .dwp-tabs::-webkit-scrollbar{display:none}
-.dwp-tab{padding:11px 12px;background:transparent;color:#a89ec4;font-size:12px;font-weight:700;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;cursor:pointer}
-.dwp-tab.on{color:#6B4CFF;border-bottom-color:#6B4CFF;background:rgba(107,76,255,.08)}
+.dwp-tab{padding:11px 12px;background:transparent;color:#b8a8d9;font-size:12px;font-weight:700;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;cursor:pointer}
+.dwp-tab.on{color:#a855f7;border-bottom-color:#a855f7;background:rgba(168,85,247,.1)}
 .dwp-body{flex:1;overflow-y:auto;padding:16px}
 .dwp-body::-webkit-scrollbar{width:6px}
-.dwp-body::-webkit-scrollbar-thumb{background:rgba(107,76,255,.3);border-radius:99px}
+.dwp-body::-webkit-scrollbar-thumb{background:rgba(168,85,247,.35);border-radius:99px}
 .dwp-view{display:none}
 .dwp-view.on{display:block}
 .dwp-field{margin-bottom:13px}
-.dwp-field label{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#6B4CFF;margin-bottom:5px}
-.dwp-field input,.dwp-field textarea,.dwp-field select{width:100%;padding:9px 11px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.25);border-radius:8px;color:#fff;font-size:13px;font-family:inherit;outline:none}
+.dwp-field label{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#a855f7;margin-bottom:5px}
+.dwp-field input,.dwp-field textarea,.dwp-field select{width:100%;padding:9px 11px;background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.3);border-radius:8px;color:#f5f0ff;font-size:13px;font-family:inherit;outline:none}
 .dwp-info{padding:11px 13px;border-radius:10px;font-size:12.5px;line-height:1.6;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.3);color:#22d3ee;margin-bottom:13px}
-.dwp-info b{color:#fff}
+.dwp-info b{color:#f5f0ff}
 .dwp-elem-list{display:flex;flex-direction:column;gap:5px;max-height:60vh;overflow-y:auto;padding-right:4px}
-.dwp-elem{padding:9px 11px;border-radius:7px;background:rgba(107,76,255,.06);border:1px solid rgba(107,76,255,.15);cursor:pointer;font-size:12px}
-.dwp-elem:hover{background:rgba(107,76,255,.12);border-color:rgba(107,76,255,.4)}
+.dwp-elem{padding:9px 11px;border-radius:7px;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.2);cursor:pointer;font-size:12px}
+.dwp-elem:hover{background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.5)}
 .dwp-elem.on{border-color:#22d3ee;background:rgba(34,211,238,.1)}
-.dwp-elem .dwp-elem-tag{display:inline-block;font-size:10px;font-weight:900;background:rgba(107,76,255,.25);color:#c4b5fd;padding:2px 6px;border-radius:4px;margin-right:5px;text-transform:uppercase}
-.dwp-elem .dwp-elem-txt{color:#ddd;display:inline;word-break:break-word}
-.dwp-datacard{background:rgba(107,76,255,.05);border:1px solid rgba(107,76,255,.2);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
-.dwp-datacard input,.dwp-datacard textarea{width:100%;padding:8px 10px;background:rgba(0,0,0,.35);border:1px solid rgba(107,76,255,.25);border-radius:7px;color:#fff;font-size:12px;font-family:inherit;outline:none}
+.dwp-elem .dwp-elem-tag{display:inline-block;font-size:10px;font-weight:900;background:rgba(168,85,247,.25);color:#d8b4fe;padding:2px 6px;border-radius:4px;margin-right:5px;text-transform:uppercase}
+.dwp-elem .dwp-elem-txt{color:#e8ddfa;display:inline;word-break:break-word}
+.dwp-datacard{background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.dwp-datacard input,.dwp-datacard textarea{width:100%;padding:8px 10px;background:rgba(0,0,0,.35);border:1px solid rgba(168,85,247,.3);border-radius:7px;color:#f5f0ff;font-size:12px;font-family:inherit;outline:none}
 .dwp-datacard .dwp-dc-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.dwp-datacard .dwp-dc-label{font-size:10px;font-weight:900;color:#6B4CFF;letter-spacing:.5px;text-transform:uppercase}
-.dwp-cat{font-size:10.5px;font-weight:900;color:#6B4CFF;margin:14px 0 7px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(107,76,255,.2);padding-bottom:5px}
-.dwp-toggle{display:flex;align-items:center;gap:9px;padding:10px 12px;background:rgba(107,76,255,.06);border-radius:9px;margin-bottom:6px;cursor:pointer}
+.dwp-datacard .dwp-dc-label{font-size:10px;font-weight:900;color:#a855f7;letter-spacing:.5px;text-transform:uppercase}
+.dwp-cat{font-size:10.5px;font-weight:900;color:#a855f7;margin:14px 0 7px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(168,85,247,.25);padding-bottom:5px}
+.dwp-toggle{display:flex;align-items:center;gap:9px;padding:10px 12px;background:rgba(168,85,247,.08);border-radius:9px;margin-bottom:6px;cursor:pointer}
 .dwp-toggle input{width:auto;margin:0}
 .dwp-toggle .dwp-tg-lbl{flex:1;font-size:13px;font-weight:700}
-.dwp-toast{position:fixed;bottom:50vh;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,#6B4CFF,#ec4899);color:#fff;padding:11px 20px;border-radius:99px;font-weight:800;font-size:14px;z-index:99999999;opacity:0;transition:all .3s;pointer-events:none;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.dwp-toast{position:fixed;bottom:50vh;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;padding:11px 20px;border-radius:99px;font-weight:800;font-size:14px;z-index:99999999;opacity:0;transition:all .3s;pointer-events:none;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(139,92,246,.5)}
 .dwp-toast.on{transform:translateX(-50%) translateY(0);opacity:1}
-.dwp-gh-status{font-size:12px;line-height:1.7;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.3);margin-top:8px;word-break:break-word}
-#dwp-inline-editor{position:fixed;z-index:9999998;background:#0d0419;color:#fff;border:2px solid #6B4CFF;border-radius:12px;padding:14px;width:min(400px,90vw);box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:system-ui,sans-serif}
-#dwp-inline-editor .dwp-ie-title{font-size:11px;font-weight:900;color:#6B4CFF;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
-#dwp-inline-editor textarea,#dwp-inline-editor input{width:100%;min-height:70px;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(107,76,255,.3);border-radius:8px;color:#fff;font-size:14px;font-family:inherit;resize:vertical;outline:none}
+.dwp-gh-status{font-size:12px;line-height:1.7;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.35);margin-top:8px;word-break:break-word}
+#dwp-inline-editor{position:fixed;z-index:9999998;background:#1a0b2e;color:#f5f0ff;border:2px solid #a855f7;border-radius:12px;padding:14px;width:min(400px,90vw);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 40px rgba(168,85,247,.2);font-family:system-ui,sans-serif}
+#dwp-inline-editor .dwp-ie-title{font-size:11px;font-weight:900;color:#a855f7;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+#dwp-inline-editor textarea,#dwp-inline-editor input{width:100%;min-height:70px;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(168,85,247,.35);border-radius:8px;color:#f5f0ff;font-size:14px;font-family:inherit;resize:vertical;outline:none}
 #dwp-inline-editor input{min-height:auto}
 #dwp-inline-editor .dwp-ie-actions{margin-top:10px;display:flex;gap:8px}
 #dwp-inline-editor .dwp-ie-actions button{flex:1;padding:10px;border-radius:8px;font-weight:800;cursor:pointer;font-family:inherit;border:0}
 #dwp-inline-editor .dwp-ie-ok{background:linear-gradient(135deg,#25d366,#0891b2);color:#fff}
-#dwp-inline-editor .dwp-ie-cancel{background:rgba(255,255,255,.08);color:#fff}
-#dwp-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(107,76,255,.3);position:relative;overflow:hidden}
+#dwp-inline-editor .dwp-ie-cancel{background:rgba(255,255,255,.08);color:#f5f0ff}
+#dwp-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(168,85,247,.35);position:relative;overflow:hidden}
 #dwp-rgb-preview::after{content:'RGB PREVIEW';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:10px;letter-spacing:3px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
-#dwp-text-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(236,72,153,.3);position:relative;overflow:hidden;background:#050208;display:flex;align-items:center;justify-content:center}
+#dwp-text-rgb-preview{width:100%;height:56px;border-radius:10px;margin-bottom:11px;border:1px solid rgba(236,72,153,.35);position:relative;overflow:hidden;background:#0f0518;display:flex;align-items:center;justify-content:center}
 #dwp-text-rgb-preview span{font-size:22px;font-weight:900;letter-spacing:2px}
 .dwp-color-row{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
 .dwp-color-row input[type=color]{width:40px;height:36px;padding:0;border:0;border-radius:8px;cursor:pointer;background:transparent}
 .dwp-slider-row{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-.dwp-slider-row input[type=range]{flex:1;accent-color:#6B4CFF}
-.dwp-slider-row .dwp-val{font-size:12px;font-weight:800;color:#6B4CFF;min-width:44px;text-align:right;font-family:ui-monospace,monospace}
-#dwp-json-out{width:100%;min-height:140px;padding:10px;background:rgba(0,0,0,.4);border:1px solid rgba(107,76,255,.3);border-radius:8px;color:#0f0;font-family:ui-monospace,monospace;font-size:11px;outline:none}
+.dwp-slider-row input[type=range]{flex:1;accent-color:#a855f7}
+.dwp-slider-row .dwp-val{font-size:12px;font-weight:800;color:#a855f7;min-width:44px;text-align:right;font-family:ui-monospace,monospace}
+#dwp-json-out{width:100%;min-height:140px;padding:10px;background:rgba(0,0,0,.45);border:1px solid rgba(168,85,247,.35);border-radius:8px;color:#0f0;font-family:ui-monospace,monospace;font-size:11px;outline:none}
 </style>
 
 <div id="dwp-login">
@@ -465,14 +1101,9 @@ console.log('[MB] site pronto');
 
     <div class="dwp-view" id="dwp-view-rgb">
       <div class="dwp-info"><b>Fundo RGB piscante + RGB nas letras.</b></div>
-
       <h3 class="dwp-cat">🌌 Fundo RGB</h3>
-      <label class="dwp-toggle">
-        <input type="checkbox" id="dwp-rgb-on">
-        <span class="dwp-tg-lbl">Ativar fundo RGB animado</span>
-      </label>
+      <label class="dwp-toggle"><input type="checkbox" id="dwp-rgb-on"><span class="dwp-tg-lbl">Ativar fundo RGB animado</span></label>
       <div id="dwp-rgb-preview"></div>
-
       <h4 class="dwp-cat">Cores do gradiente</h4>
       <div class="dwp-color-row">
         <input type="color" class="dwp-rgb-color" value="#ff0080">
@@ -481,93 +1112,26 @@ console.log('[MB] site pronto');
         <input type="color" class="dwp-rgb-color" value="#00ff88">
         <input type="color" class="dwp-rgb-color" value="#ffcc00">
       </div>
-
-      <div class="dwp-field">
-        <label>Velocidade</label>
-        <div class="dwp-slider-row">
-          <input type="range" id="dwp-rgb-speed" min="1" max="30" value="14">
-          <span class="dwp-val" id="dwp-rgb-speed-val">14s</span>
-        </div>
-      </div>
-
-      <div class="dwp-field">
-        <label>Intensidade</label>
-        <div class="dwp-slider-row">
-          <input type="range" id="dwp-rgb-opacity" min="0" max="100" value="55">
-          <span class="dwp-val" id="dwp-rgb-opacity-val">55%</span>
-        </div>
-      </div>
-
-      <div class="dwp-field">
-        <label>Direção</label>
-        <select id="dwp-rgb-dir">
-          <option value="120deg">Diagonal ↘</option>
-          <option value="90deg">Horizontal →</option>
-          <option value="180deg">Vertical ↓</option>
-          <option value="45deg">Diagonal ↗</option>
-          <option value="0deg">Horizontal ←</option>
-        </select>
-      </div>
-
-      <div class="dwp-field">
-        <label>Mesclagem</label>
-        <select id="dwp-rgb-blend">
-          <option value="normal">Normal</option>
-          <option value="screen">Screen</option>
-          <option value="overlay">Overlay</option>
-          <option value="multiply">Multiply</option>
-        </select>
-      </div>
-
-      <hr style="border:0;border-top:1px solid rgba(107,76,255,.25);margin:20px 0">
-
+      <div class="dwp-field"><label>Velocidade</label><div class="dwp-slider-row"><input type="range" id="dwp-rgb-speed" min="1" max="30" value="14"><span class="dwp-val" id="dwp-rgb-speed-val">14s</span></div></div>
+      <div class="dwp-field"><label>Intensidade</label><div class="dwp-slider-row"><input type="range" id="dwp-rgb-opacity" min="0" max="100" value="55"><span class="dwp-val" id="dwp-rgb-opacity-val">55%</span></div></div>
+      <div class="dwp-field"><label>Direção</label><select id="dwp-rgb-dir"><option value="120deg">Diagonal ↘</option><option value="90deg">Horizontal →</option><option value="180deg">Vertical ↓</option><option value="45deg">Diagonal ↗</option><option value="0deg">Horizontal ←</option></select></div>
+      <div class="dwp-field"><label>Mesclagem</label><select id="dwp-rgb-blend"><option value="normal">Normal</option><option value="screen">Screen</option><option value="overlay">Overlay</option><option value="multiply">Multiply</option></select></div>
+      <hr style="border:0;border-top:1px solid rgba(168,85,247,.3);margin:20px 0">
       <h3 class="dwp-cat">🌈 RGB nas letras</h3>
-      <label class="dwp-toggle">
-        <input type="checkbox" id="dwp-txtrgb-on">
-        <span class="dwp-tg-lbl">Ativar RGB nas letras</span>
-      </label>
+      <label class="dwp-toggle"><input type="checkbox" id="dwp-txtrgb-on"><span class="dwp-tg-lbl">Ativar RGB nas letras</span></label>
       <div id="dwp-text-rgb-preview"><span id="dwp-text-rgb-sample">MÍDIA BELTRÃO</span></div>
-
-      <div class="dwp-field">
-        <label>Modo</label>
-        <select id="dwp-txtrgb-mode">
-          <option value="gradient">Gradiente correndo</option>
-          <option value="flash">Cores piscando</option>
-          <option value="pulse">Pulsar brilho</option>
-          <option value="rainbow">Arco-íris deslizando</option>
-          <option value="neon">Neon pulsante</option>
-          <option value="shake">Tremida</option>
-        </select>
-      </div>
-
-      <div class="dwp-field">
-        <label>Escopo</label>
-        <select id="dwp-txtrgb-scope">
-          <option value="headings">Só títulos</option>
-          <option value="buttons">Só botões/links</option>
-          <option value="headings-buttons">Títulos + botões</option>
-          <option value="all">Tudo que é texto</option>
-        </select>
-      </div>
-
-      <div class="dwp-field">
-        <label>Velocidade</label>
-        <div class="dwp-slider-row">
-          <input type="range" id="dwp-txtrgb-speed" min="1" max="20" value="4">
-          <span class="dwp-val" id="dwp-txtrgb-speed-val">4s</span>
-        </div>
-      </div>
+      <div class="dwp-field"><label>Modo</label><select id="dwp-txtrgb-mode"><option value="gradient">Gradiente correndo</option><option value="flash">Cores piscando</option><option value="pulse">Pulsar brilho</option><option value="rainbow">Arco-íris deslizando</option><option value="neon">Neon pulsante</option><option value="shake">Tremida</option></select></div>
+      <div class="dwp-field"><label>Escopo</label><select id="dwp-txtrgb-scope"><option value="headings">Só títulos</option><option value="buttons">Só botões/links</option><option value="headings-buttons">Títulos + botões</option><option value="all">Tudo que é texto</option></select></div>
+      <div class="dwp-field"><label>Velocidade</label><div class="dwp-slider-row"><input type="range" id="dwp-txtrgb-speed" min="1" max="20" value="4"><span class="dwp-val" id="dwp-txtrgb-speed-val">4s</span></div></div>
     </div>
 
     <div class="dwp-view" id="dwp-view-publicar">
       <div class="dwp-info"><b>Publicar.</b> Gera o dados.json pra você subir manualmente ou empurra direto via GitHub.</div>
-
       <h3 class="dwp-cat">💾 1. Gerar / baixar dados.json</h3>
       <button class="dwp-btn success wide" id="dwp-export" type="button">📥 Baixar dados.json</button>
       <button class="dwp-btn ghost wide" id="dwp-copy-json" type="button">📋 Copiar JSON</button>
       <button class="dwp-btn ghost wide" id="dwp-show-json" type="button">👁️ Mostrar JSON aqui</button>
       <textarea id="dwp-json-out" placeholder="Clique em 'Mostrar JSON aqui' pra ver o conteúdo"></textarea>
-
       <h3 class="dwp-cat" style="margin-top:18px;">⚡ 2. Publicar direto no GitHub</h3>
       <div class="dwp-datacard">
         <div class="dwp-dc-label">🔑 Token (deve ter permissão Contents: Read and write)</div>
@@ -580,7 +1144,7 @@ console.log('[MB] site pronto');
           <input type="text" id="dwp-gh-path" placeholder="caminho" value="dados.json" style="flex:1">
           <input type="text" id="dwp-gh-branch" placeholder="branch" value="main" style="flex:1">
         </div>
-        <div style="font-size:11px;color:#a89ec4;line-height:1.5">⚠️ Use só o <b>nome do usuário</b>, sem <code>.git</code> no final. Ex: <code>ulianoodom12-creator</code></div>
+        <div style="font-size:11px;color:#b8a8d9;line-height:1.5">⚠️ Use só o <b>nome do usuário</b>, sem <code>.git</code> no final. Ex: <code>ulianoodom12-creator</code></div>
         <div class="dwp-dc-row">
           <button class="dwp-btn" id="dwp-gh-save" type="button">💾 Salvar</button>
           <button class="dwp-btn ghost" id="dwp-gh-test" type="button">🔍 Testar</button>
@@ -588,13 +1152,11 @@ console.log('[MB] site pronto');
         <div class="dwp-gh-status" id="dwp-gh-status">Preencha os campos e clique em Testar.</div>
       </div>
       <button class="dwp-btn github wide" id="dwp-gh-publish" type="button">🚀 Publicar AGORA no GitHub</button>
-
       <h3 class="dwp-cat">🔒 Segurança</h3>
       <button class="dwp-btn ghost wide" id="dwp-lock-now" type="button">Bloquear painel</button>
       <button class="dwp-btn danger wide" id="dwp-clear-local" type="button" style="margin-top:6px">🗑️ Apagar dados locais</button>
-
       <h3 class="dwp-cat">📊 Status</h3>
-      <div style="background:rgba(107,76,255,.06);border-radius:8px;padding:11px;font-size:12px;line-height:1.8;font-family:ui-monospace,monospace;color:#ddd">
+      <div style="background:rgba(168,85,247,.08);border-radius:8px;padding:11px;font-size:12px;line-height:1.8;font-family:ui-monospace,monospace;color:#e8ddfa">
         <div>Vídeos: <span id="st-videos" style="color:#22d3ee;font-weight:800">0</span></div>
         <div>Notícias: <span id="st-noticias" style="color:#22d3ee;font-weight:800">0</span></div>
         <div>Textos editados: <span id="st-texts" style="color:#22d3ee;font-weight:800">0</span></div>
@@ -648,11 +1210,11 @@ function aplicarEstilos(){
     else if(window.MB && window.MB.applyStyle) window.MB.applyStyle();
   }catch(e){}
 }
-var TEXT_SELECTOR = 'h1,h2,h3,h4,h5,h6,p,a,button,span,li,label,figcaption,.cardHead,.slogan,.noticia h3,.noticia small';
+var TEXT_SELECTOR = 'h1,h2,h3,h4,h5,h6,p,a,button,span,li,label,figcaption,.cardHead,.slogan,.noticia h3,.noticia small,.hero-card h1,.destaque-card h3,.destaque-card p,.newsletter-box h3,.newsletter-box p,.info-chip b,.info-chip span';
 function coletarTextos(){
   var arr=[];
   document.querySelectorAll(TEXT_SELECTOR).forEach(function(el){
-    if(el.closest('#dwp-panel') || el.closest('#dwp-login') || el.closest('#dwp-toast') || el.closest('#dwp-inline-editor')) return;
+    if(el.closest('#dwp-panel') || el.closest('#dwp-login') || el.closest('#dwp-toast') || el.closest('#dwp-inline-editor') || el.closest('#breaking')) return;
     var temTexto=false;
     for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3 && n.nodeValue.trim()){ temTexto=true; break; } }
     if(!temTexto) return;
@@ -801,7 +1363,7 @@ function refreshElementList(){
     };
     box.appendChild(d);
   });
-  if(count===0) box.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhum texto.</div>';
+  if(count===0) box.innerHTML='<div style="text-align:center;color:#b8a8d9;font-size:12px;padding:20px">Nenhum texto.</div>';
 }
 function refreshImageList(){
   var box=$('dwp-img-list'); if(!box) return;
@@ -816,7 +1378,7 @@ function refreshImageList(){
     var d=document.createElement('div');
     d.className='dwp-elem';
     d.style.display='flex'; d.style.gap='10px'; d.style.alignItems='center';
-    d.innerHTML='<img src="'+esc(src)+'" style="width:44px;height:44px;border-radius:6px;background:#1a0a30;object-fit:cover;flex-shrink:0" onerror="this.style.background=\'#333\'"><div style="flex:1;min-width:0"><div style="font-size:10px;color:#6B4CFF;font-weight:800;text-transform:uppercase">IMG#'+idx+'</div><div style="font-size:11px;color:#a89ec4;word-break:break-all">'+esc(src.slice(0,60))+(src.length>60?'…':'')+'</div></div>';
+    d.innerHTML='<img src="'+esc(src)+'" style="width:44px;height:44px;border-radius:6px;background:#241041;object-fit:cover;flex-shrink:0" onerror="this.style.background=\'#333\'"><div style="flex:1;min-width:0"><div style="font-size:10px;color:#a855f7;font-weight:800;text-transform:uppercase">IMG#'+idx+'</div><div style="font-size:11px;color:#b8a8d9;word-break:break-all">'+esc(src.slice(0,60))+(src.length>60?'…':'')+'</div></div>';
     d.onclick=function(){
       el.scrollIntoView({behavior:'smooth', block:'center'});
       setTimeout(function(){
@@ -827,7 +1389,7 @@ function refreshImageList(){
     };
     box.appendChild(d);
   });
-  if(count===0) box.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhuma imagem.</div>';
+  if(count===0) box.innerHTML='<div style="text-align:center;color:#b8a8d9;font-size:12px;padding:20px">Nenhuma imagem.</div>';
 }
 function refreshVideoTab(){
   var list=$('dwp-v-list'); if(!list) return;
@@ -836,7 +1398,7 @@ function refreshVideoTab(){
   var cnt=$('dwp-v-count');
   if(!d){ if(cnt) cnt.textContent='0'; list.innerHTML='<div style="text-align:center;color:#f87171;font-size:12px;padding:20px">Aguardando site carregar...</div>'; return; }
   if(cnt) cnt.textContent = d.videos.length;
-  if(d.videos.length===0){ list.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhum vídeo.</div>'; return; }
+  if(d.videos.length===0){ list.innerHTML='<div style="text-align:center;color:#b8a8d9;font-size:12px;padding:20px">Nenhum vídeo.</div>'; return; }
   d.videos.forEach(function(v, i){
     var card=document.createElement('div');
     card.className='dwp-datacard';
@@ -880,21 +1442,13 @@ function addVideo(){
   var tituloEl=$('dwp-v-titulo');
   var descEl=$('dwp-v-desc');
   d.videos.unshift({
-    tipo: info.tipo,
-    id: info.id,
-    linkOriginal: info.original || link,
+    tipo: info.tipo, id: info.id, linkOriginal: info.original || link,
     titulo: (tituloEl ? tituloEl.value.trim() : '') || 'Vídeo do dia - Mídia Beltrão',
     desc: (descEl ? descEl.value.trim() : '') || 'Mídia Beltrão - @midiabeltrao',
     data: Date.now()
   });
-  if(linkEl) linkEl.value='';
-  if(tituloEl) tituloEl.value='';
-  if(descEl) descEl.value='';
-  salvarDadosLocal();
-  reRender();
-  refreshVideoTab();
-  updateStats();
-  toast('✓ Vídeo adicionado');
+  if(linkEl) linkEl.value=''; if(tituloEl) tituloEl.value=''; if(descEl) descEl.value='';
+  salvarDadosLocal(); reRender(); refreshVideoTab(); updateStats(); toast('✓ Vídeo adicionado');
 }
 function refreshNoticiaTab(){
   var list=$('dwp-n-list'); if(!list) return;
@@ -903,7 +1457,7 @@ function refreshNoticiaTab(){
   var cnt=$('dwp-n-count');
   if(!d){ if(cnt) cnt.textContent='0'; list.innerHTML='<div style="text-align:center;color:#f87171;font-size:12px;padding:20px">Aguardando site carregar...</div>'; return; }
   if(cnt) cnt.textContent = d.noticias.length;
-  if(d.noticias.length===0){ list.innerHTML='<div style="text-align:center;color:#a89ec4;font-size:12px;padding:20px">Nenhuma notícia.</div>'; return; }
+  if(d.noticias.length===0){ list.innerHTML='<div style="text-align:center;color:#b8a8d9;font-size:12px;padding:20px">Nenhuma notícia.</div>'; return; }
   d.noticias.forEach(function(n, i){
     var card=document.createElement('div');
     card.className='dwp-datacard';
@@ -919,10 +1473,7 @@ function refreshNoticiaTab(){
       d2.noticias[i].cat=(card.querySelector('[data-f="cat"]').value||'DESTAQUE').toUpperCase();
       d2.noticias[i].img=card.querySelector('[data-f="img"]').value;
       d2.noticias[i].texto=card.querySelector('[data-f="texto"]').value;
-      salvarDadosLocal();
-      reRender();
-      refreshNoticiaTab();
-      toast('✓ Notícia salva');
+      salvarDadosLocal(); reRender(); refreshNoticiaTab(); toast('✓ Notícia salva');
     };
     card.querySelector('[data-a="up"]').onclick=function(){ if(i<=0) return; var d2=getMB(); var t=d2.noticias[i]; d2.noticias[i]=d2.noticias[i-1]; d2.noticias[i-1]=t; salvarDadosLocal(); reRender(); refreshNoticiaTab(); };
     card.querySelector('[data-a="down"]').onclick=function(){ var d2=getMB(); if(i>=d2.noticias.length-1) return; var t=d2.noticias[i]; d2.noticias[i]=d2.noticias[i+1]; d2.noticias[i+1]=t; salvarDadosLocal(); reRender(); refreshNoticiaTab(); };
@@ -936,24 +1487,15 @@ function addNoticia(){
   if(!t){ toast('Digite um título'); if(tituloEl) tituloEl.focus(); return; }
   var d = getMB();
   if(!d){ toast('Site ainda não carregou'); return; }
-  var catEl=$('dwp-n-cat');
-  var imgEl=$('dwp-n-img');
-  var textoEl=$('dwp-n-texto');
+  var catEl=$('dwp-n-cat'); var imgEl=$('dwp-n-img'); var textoEl=$('dwp-n-texto');
   d.noticias.unshift({
     titulo: t,
     cat: ((catEl ? catEl.value.trim() : '') || 'DESTAQUE').toUpperCase(),
     img: (imgEl ? imgEl.value.trim() : '') || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300',
     texto: (textoEl ? textoEl.value.trim() : '') || ''
   });
-  if(tituloEl) tituloEl.value='';
-  if(catEl) catEl.value='';
-  if(imgEl) imgEl.value='';
-  if(textoEl) textoEl.value='';
-  salvarDadosLocal();
-  reRender();
-  refreshNoticiaTab();
-  updateStats();
-  toast('✓ Notícia adicionada');
+  if(tituloEl) tituloEl.value=''; if(catEl) catEl.value=''; if(imgEl) imgEl.value=''; if(textoEl) textoEl.value='';
+  salvarDadosLocal(); reRender(); refreshNoticiaTab(); updateStats(); toast('✓ Notícia adicionada');
 }
 function renderRgbPreview(){
   var p=$('dwp-rgb-preview'); if(!p) return;
@@ -974,12 +1516,10 @@ function renderTextRgbPreview(){
     var colors=mode==='rainbow'?'#ff0080,#ff8c00,#ffcc00,#00ff88,#00d4ff,#7928ca,#ff0080':'#ff0080,#7928ca,#00d4ff,#00ff88,#ffcc00,#ff0080';
     sp.style.background='linear-gradient(90deg,'+colors+')';
     sp.style.backgroundSize='400% 400%';
-    sp.style.webkitBackgroundClip='text';
-    sp.style.backgroundClip='text';
-    sp.style.webkitTextFillColor='transparent';
+    sp.style.webkitBackgroundClip='text'; sp.style.backgroundClip='text'; sp.style.webkitTextFillColor='transparent';
     sp.style.animation='dwpTextGradient '+speed+'s linear infinite';
   } else if(mode==='flash'){ sp.style.animation='dwpTextFlash '+speed+'s linear infinite'; }
-  else if(mode==='pulse'){ sp.style.color='#6B4CFF'; sp.style.animation='dwpTextPulse '+speed+'s ease-in-out infinite'; }
+  else if(mode==='pulse'){ sp.style.color='#a855f7'; sp.style.animation='dwpTextPulse '+speed+'s ease-in-out infinite'; }
   else if(mode==='neon'){ sp.style.color='#ec4899'; sp.style.animation='dwpTextNeon '+speed+'s ease-in-out infinite'; }
   else if(mode==='shake'){ sp.style.color='#22d3ee'; sp.style.animation='dwpTextShake '+speed+'s linear infinite'; }
 }
@@ -1007,9 +1547,8 @@ function tryLogin(){
   if(isLocked()){ if(e) e.textContent='Bloqueado. 10 min.'; return; }
   var p=$('dwp-login-pass'); var pass = p ? p.value : '';
   if(!pass){ if(e) e.textContent='Digite a senha.'; return; }
-  if(pass===DWP_PASS){
-    setAtt(0); setSess(true); unlocked=true; closeLogin(); openPanel(); toast('✓ Bem-vindo');
-  } else {
+  if(pass===DWP_PASS){ setAtt(0); setSess(true); unlocked=true; closeLogin(); openPanel(); toast('✓ Bem-vindo'); }
+  else {
     var a=getAtt()+1; setAtt(a);
     if(a>=5){ setLock(); setAtt(0); if(e) e.textContent='Bloqueado 10 min.'; }
     else { if(e) e.textContent='Senha incorreta ('+a+'/5)'; }
@@ -1021,8 +1560,7 @@ function closeLogin(){ var el=$('dwp-login'); if(!el) return; el.classList.remov
 function requestOpen(){ if(unlocked || hasSess()){ unlocked=true; openPanel(); } else { openLogin(); } }
 function openPanel(){
   var p=$('dwp-panel'); if(!p) return;
-  p.classList.add('on');
-  panelOpen=true;
+  p.classList.add('on'); panelOpen=true;
   try{ refreshVideoTab(); }catch(e){}
   try{ refreshNoticiaTab(); }catch(e){}
   try{ refreshElementList(); }catch(e){}
@@ -1032,12 +1570,7 @@ function openPanel(){
   try{ ghSyncInputs(); }catch(e){}
   try{ enableEditMode(); }catch(e){}
 }
-function closePanel(){
-  var p=$('dwp-panel'); if(!p) return;
-  p.classList.remove('on');
-  panelOpen=false;
-  try{ disableEditMode(); }catch(e){}
-}
+function closePanel(){ var p=$('dwp-panel'); if(!p) return; p.classList.remove('on'); panelOpen=false; try{ disableEditMode(); }catch(e){} }
 function lockNow(){ setSess(false); unlocked=false; closePanel(); toast('🔒 Bloqueado'); }
 function updateStats(){
   var d=getMB();
@@ -1046,10 +1579,7 @@ function updateStats(){
   if($('st-texts')) $('st-texts').textContent = Object.keys(lerTexts()).length;
   if($('st-imgs')) $('st-imgs').textContent = Object.keys(lerImgs()).length;
 }
-/* GITHUB */
-function sanitizeUser(u){
-  return String(u||'').trim().replace(/\.git$/i,'').replace(/\/+$/,'');
-}
+function sanitizeUser(u){ return String(u||'').trim().replace(/\.git$/i,'').replace(/\/+$/,''); }
 function ghLoad(){ try{ var r=localStorage.getItem(LS_GH); if(!r) return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; return JSON.parse(r); }catch(e){ return {token:'', user:'', repo:'', path:'dados.json', branch:'main'}; } }
 function ghSave(c){ try{ localStorage.setItem(LS_GH, JSON.stringify(c)); }catch(e){} }
 function ghSyncInputs(){
@@ -1073,7 +1603,7 @@ function ghSaveFromInputs(){
 function buildPayload(){
   var d = getMB() || {videos:[], noticias:[], config:{auto60:false}};
   return {
-    _meta:{gerado_em:new Date().toISOString(), versao:13},
+    _meta:{gerado_em:new Date().toISOString(), versao:14},
     config: d.config || {auto60:false},
     videos: d.videos || [],
     noticias: d.noticias || [],
@@ -1083,19 +1613,18 @@ function buildPayload(){
 }
 function utf8B64(s){ var b=new TextEncoder().encode(s); var bin=''; for(var i=0;i<b.length;i++) bin+=String.fromCharCode(b[i]); return btoa(bin); }
 function ghApi(c){ return 'https://api.github.com/repos/'+encodeURIComponent(c.user)+'/'+encodeURIComponent(c.repo)+'/contents/'+c.path.split('/').map(encodeURIComponent).join('/'); }
-function ghStatus(m, t){ var el=$('dwp-gh-status'); if(!el) return; el.innerHTML=m; el.style.color = t==='ok' ? '#25d366' : t==='err' ? '#f87171' : '#a89ec4'; }
+function ghStatus(m, t){ var el=$('dwp-gh-status'); if(!el) return; el.innerHTML=m; el.style.color = t==='ok' ? '#25d366' : t==='err' ? '#f87171' : '#b8a8d9'; }
 async function ghTest(){
   var c=ghSaveFromInputs();
   if(!c.token||!c.user||!c.repo){ ghStatus('⚠️ Preenche token, usuário e repo.', 'err'); return; }
   ghStatus('🔍 Testando conexão com <b>'+esc(c.user)+'/'+esc(c.repo)+'</b>...');
   try{
     var r=await fetch(ghApi(c)+'?ref='+encodeURIComponent(c.branch), {headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'}});
-    if(r.status===404){ ghStatus('✓ Conexão ok com o repo <b>'+esc(c.user)+'/'+esc(c.repo)+'</b>. O arquivo <b>'+esc(c.path)+'</b> ainda não existe — será criado no Publish.', 'ok'); return; }
-    if(r.status===401){ ghStatus('❌ Token inválido ou expirado. Gere um novo em github.com/settings/tokens', 'err'); return; }
-    if(r.status===403){ ghStatus('❌ Sem permissão. O token precisa ter <b>Contents: Read and write</b> neste repo.', 'err'); return; }
-    if(r.status===404){ ghStatus('❌ Repositório não encontrado. Confere se <b>'+esc(c.user)+'/'+esc(c.repo)+'</b> existe no GitHub.', 'err'); return; }
+    if(r.status===404){ ghStatus('✓ Conexão ok. O arquivo <b>'+esc(c.path)+'</b> ainda não existe — será criado.', 'ok'); return; }
+    if(r.status===401){ ghStatus('❌ Token inválido ou expirado.', 'err'); return; }
+    if(r.status===403){ ghStatus('❌ Sem permissão. Precisa de <b>Contents: Read and write</b>.', 'err'); return; }
     if(!r.ok) throw new Error('HTTP '+r.status);
-    ghStatus('✓ Tudo certo. Repo e arquivo existem. Pode publicar.', 'ok');
+    ghStatus('✓ Tudo certo. Pode publicar.', 'ok');
   }catch(e){ ghStatus('❌ '+e.message, 'err'); }
 }
 async function ghPublish(){
@@ -1113,16 +1642,13 @@ async function ghPublish(){
   try{
     var r=await fetch(ghApi(c), {method:'PUT', headers:{'Authorization':'Bearer '+c.token, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json', 'X-GitHub-Api-Version':'2022-11-28'}, body:JSON.stringify(body)});
     if(!r.ok){
-      var errTxt = await r.text();
       var msg = 'HTTP '+r.status;
-      if(r.status===404) msg = 'Repositório não encontrado. Confere se <b>'+esc(c.user)+'/'+esc(c.repo)+'</b> existe (sem .git no final).';
+      if(r.status===404) msg = 'Repositório não encontrado. Confere se <b>'+esc(c.user)+'/'+esc(c.repo)+'</b> existe.';
       else if(r.status===401) msg = 'Token inválido ou expirado.';
-      else if(r.status===403) msg = 'Sem permissão. O token precisa de <b>Contents: Read and write</b>.';
-      else if(r.status===409) msg = 'Conflito de SHA. Recarrega a página e tenta de novo.';
-      else if(r.status===422) msg = 'Dados rejeitados pelo GitHub. Confere se o branch <b>'+esc(c.branch)+'</b> existe.';
-      ghStatus('❌ '+msg, 'err');
-      console.warn('[DWP] GitHub response:', errTxt);
-      return;
+      else if(r.status===403) msg = 'Sem permissão. Precisa de Contents: Read and write.';
+      else if(r.status===409) msg = 'Conflito de SHA. Recarrega e tenta de novo.';
+      else if(r.status===422) msg = 'Dados rejeitados. Confere o branch <b>'+esc(c.branch)+'</b>.';
+      ghStatus('❌ '+msg, 'err'); return;
     }
     var res=await r.json();
     var url=res.commit&&res.commit.html_url ? res.commit.html_url : '';
@@ -1130,68 +1656,42 @@ async function ghPublish(){
     toast('✓ Publicado no GitHub');
   }catch(e){ ghStatus('❌ '+e.message, 'err'); }
 }
-/* EXPORT */
 function exportJson(){
-  var payload = buildPayload();
-  var jsonStr = JSON.stringify(payload, null, 2);
-  var filename = 'dados.json';
-  /* Tentativa 1: Blob + link com click programático e sem revogar logo em seguida */
+  var jsonStr = JSON.stringify(buildPayload(), null, 2);
   try{
     var blob = new Blob([jsonStr], {type:'application/json'});
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.style.display='none';
-    document.body.appendChild(a);
-    a.click();
-    /* Não revoga imediatamente — espera 10s */
+    a.href = url; a.download = 'dados.json'; a.style.display='none';
+    document.body.appendChild(a); a.click();
     setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(e){} }, 10000);
     toast('✓ Download iniciado');
-    /* Também preenche o textarea de fallback */
     if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
     return;
   }catch(e){}
-  /* Fallback: data URI */
   try{
     var a2 = document.createElement('a');
     a2.href = 'data:application/json;charset=utf-8,'+encodeURIComponent(jsonStr);
-    a2.download = filename;
-    a2.style.display='none';
-    document.body.appendChild(a2);
-    a2.click();
+    a2.download = 'dados.json'; a2.style.display='none';
+    document.body.appendChild(a2); a2.click();
     setTimeout(function(){ try{ document.body.removeChild(a2); }catch(e){} }, 5000);
     toast('✓ Download iniciado (fallback)');
-  }catch(e){ toast('⚠️ Download falhou. Use "Mostrar JSON aqui" e copie'); }
+  }catch(e){ toast('⚠️ Falhou. Use "Mostrar JSON aqui" e copie'); }
 }
 function copyJson(){
   var jsonStr = JSON.stringify(buildPayload(), null, 2);
   if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
   var ok=false;
-  try{
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(jsonStr).then(function(){ toast('✓ JSON copiado'); });
-      ok=true;
-    }
-  }catch(e){}
+  try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(jsonStr).then(function(){ toast('✓ JSON copiado'); }); ok=true; } }catch(e){}
   if(!ok){
-    try{
-      var ta=$('dwp-json-out');
-      if(ta){ ta.select(); ta.setSelectionRange(0, 999999); document.execCommand('copy'); toast('✓ JSON copiado (manual)'); }
-      else toast('⚠️ Copia do textarea');
-    }catch(e){ toast('⚠️ Copia manual do textarea'); }
+    try{ var ta=$('dwp-json-out'); if(ta){ ta.select(); ta.setSelectionRange(0, 999999); document.execCommand('copy'); toast('✓ JSON copiado (manual)'); } else toast('⚠️ Copia do textarea'); }catch(e){ toast('⚠️ Copia manual do textarea'); }
   }
 }
-function showJson(){
-  var jsonStr = JSON.stringify(buildPayload(), null, 2);
-  if($('dwp-json-out')) $('dwp-json-out').value = jsonStr;
-  toast('✓ JSON mostrado abaixo');
-}
+function showJson(){ var jsonStr = JSON.stringify(buildPayload(), null, 2); if($('dwp-json-out')) $('dwp-json-out').value = jsonStr; toast('✓ JSON mostrado abaixo'); }
 function clearLocal(){
   if(!confirm('Apagar dados locais?')) return;
   try{ localStorage.removeItem('mb_data_local'); localStorage.removeItem('mb_style_local'); localStorage.removeItem(LS_TEXTS); localStorage.removeItem(LS_IMGS); }catch(e){}
-  toast('✓ Apagado');
-  setTimeout(function(){ location.reload(); }, 800);
+  toast('✓ Apagado'); setTimeout(function(){ location.reload(); }, 800);
 }
 function bindDelegated(){
   document.addEventListener('click', function(e){
@@ -1205,8 +1705,7 @@ function bindDelegated(){
       document.querySelectorAll('.dwp-tab').forEach(function(x){ x.classList.remove('on'); });
       tab.classList.add('on');
       document.querySelectorAll('.dwp-view').forEach(function(v){ v.classList.remove('on'); });
-      var v=$('dwp-view-'+tab.dataset.tab);
-      if(v) v.classList.add('on');
+      var v=$('dwp-view-'+tab.dataset.tab); if(v) v.classList.add('on');
       try{
         if(tab.dataset.tab==='videos') refreshVideoTab();
         if(tab.dataset.tab==='noticias') refreshNoticiaTab();
@@ -1233,8 +1732,7 @@ function bindDelegated(){
         e.preventDefault(); e.stopPropagation();
         document.querySelectorAll('.dwp-selected').forEach(function(x){ x.classList.remove('dwp-selected'); });
         el.classList.add('dwp-selected');
-        if(el.tagName==='IMG') showImageEditor(el);
-        else showTextEditor(el);
+        if(el.tagName==='IMG') showImageEditor(el); else showTextEditor(el);
         return;
       }
     }
